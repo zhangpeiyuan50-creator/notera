@@ -8,7 +8,7 @@
 <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-16 -2 104 124"><path d="M0 0 H84 V29 L38 60 L84 91 V120 H0 Z" fill="%2310142B"/><rect x="-13" y="99" width="34" height="34" fill="%23D8412F"/></svg>'>
 <style>
 /*
-  DIRECTION CONTRACT — Notera 枢页 · 产品宣传页 v2（Persuade）
+  DIRECTION CONTRACT — Notera 枢页 · 产品官网 v2（Persuade）
   THESIS: 一张会呼吸的品牌样张：印刷排版为骨，墨点 IP 为声，滚动为翻页；
   拒绝 SaaS 落地页的三栏卡片与渐变主视觉。
   OWN-WORLD: 纸白 #F4F1E8 主导，墨蓝 #10142B 结构（超大字行/规范反白区/页脚），
@@ -171,18 +171,39 @@ nav{
 /* ---------- 获取 / 定价 ---------- */
 .get{margin-bottom:48px}
 .get-grid{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--rule-strong)}
-.plan{padding:24px 20px 26px;border-right:1px solid var(--rule);display:flex;flex-direction:column}
+.plan{position:relative;padding:24px 20px 26px;border-right:1px solid var(--rule);display:flex;flex-direction:column;transition:background .2s}
 .plan:last-child{border-right:none}
+/* 四档同色系（墨蓝 tint，品牌手册未定义、此处新增，见 DESIGN.md）：
+   FREE 纸白 → SPRINT 浅墨蓝调 → PLUS 墨蓝（最深，视觉锚点）→ DUO 中墨蓝调；PRO 保持灰调 NEXT */
+.plan.t0{background:var(--paper)}
+.plan.t1{background:#E4E6EE}
+.plan.t2{background:#C9CEDD}
+.plan.t2 ul,.plan.t2 .plan-k{color:#39415A}
+.plan.t2 .plan-price s{color:#5A6478}
 .plan.hot{background:var(--ink);color:var(--paper)}
 .plan.next{background:rgba(16,20,43,.035);color:var(--slate)}
 .plan-k{font-family:var(--font-display);font-weight:900;font-size:12px;letter-spacing:.16em;color:var(--slate)}
 .plan.hot .plan-k{color:rgba(244,241,232,.6)}
 .plan-badge{display:inline-block;margin-left:8px;padding:2px 6px;border:1px solid currentColor;font-size:9.5px;letter-spacing:.14em;vertical-align:middle;font-weight:700}
-.plan-price{font-family:var(--font-display);font-weight:900;font-size:34px;line-height:1.1;margin:14px 0 6px}
-.plan-price s{display:block;font-size:14px;font-weight:600;color:var(--slate);text-decoration:line-through;letter-spacing:.02em;margin-bottom:2px}
-.plan.hot .plan-price s{color:rgba(244,241,232,.55)}
+/* 价格：品牌 display 字体，一行现价 + 一行灰色元信息（标价划线 · 立减）；五卡价格区等高，标题对齐 */
+.plan-price{display:flex;align-items:baseline;gap:5px;font-family:var(--font-display);font-weight:900;font-size:40px;line-height:1;letter-spacing:-.01em;margin:16px 0 6px;min-height:42px}
+.plan-price .cur{font-size:22px;font-weight:700;letter-spacing:0}
+.plan-price small{font-size:13px;font-weight:600;letter-spacing:.06em;margin-left:2px}
+.plan-meta{font-family:var(--font-display);font-weight:600;font-size:11.5px;letter-spacing:.06em;color:var(--slate);min-height:18px;margin-bottom:14px}
+.plan-meta s{text-decoration:line-through;margin-right:4px}
+.plan.hot .plan-meta{color:rgba(244,241,232,.62)}
 .plan.next .plan-price{color:var(--slate)}
-.plan-price small{font-size:13px;font-weight:600;letter-spacing:.04em;margin-left:4px}
+/* 档位图标：全部由标志的「带缺口的页」母题推导，纯墨蓝线条；默认略沉，悬停浮现 */
+.plan-ico{position:absolute;top:18px;right:16px;width:44px;height:44px;stroke:var(--ink);fill:none;stroke-width:1.5;stroke-linejoin:miter;stroke-linecap:square;opacity:.45;transform:translateY(3px);transition:opacity .25s var(--ease),transform .4s var(--ease)}
+.plan-ico .f{fill:var(--ink);stroke:none}
+.plan.hot .plan-ico{stroke:var(--paper)}
+.plan.hot .plan-ico .f{fill:var(--paper)}
+.plan:hover .plan-ico{opacity:1;transform:translateY(0)}
+.plan.t0:hover{background:#FFFDF7}
+.plan.t1:hover{background:#ECEEF4}
+.plan.t2:hover{background:#D5D9E6}
+.plan.hot:hover{background:var(--ink-hover)}
+@media(prefers-reduced-motion:reduce){.plan-ico{transition:none;transform:none;opacity:.8}}
 .plan-t{font-weight:700;font-size:14.5px;margin-bottom:14px}
 .plan ul{list-style:none;padding:0;margin:0;font-size:13px;color:var(--slate);line-height:1.75}
 .plan.hot ul{color:rgba(244,241,232,.78)}
@@ -197,14 +218,38 @@ nav{
 .get-steps>div:last-child{border-right:none}
 .get-steps b{display:block;font-family:var(--font-display);font-weight:900;font-size:14px;letter-spacing:.1em;color:var(--ink);margin-bottom:8px}
 .get .cta-row{justify-content:flex-start}
-.get-bottom{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:stretch;margin-top:36px}
+.get-bottom{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:stretch;margin-top:72px}
 .get-dl{display:flex;flex-direction:column;justify-content:center}
-.get-dl .note{margin-top:20px;max-width:none}
-.contact{display:flex;align-items:center;gap:20px;border:1px solid var(--rule-strong);background:var(--paper);padding:18px 20px}
-.contact img{width:148px;height:148px;border:1px solid var(--rule);flex-shrink:0}
-.contact b{display:block;font-size:15px;margin-bottom:6px}
-.contact span{display:block;font-size:12.5px;color:var(--slate);line-height:1.7}
-.contact .contact-price{margin-top:10px;font-family:var(--font-display);font-weight:600;font-size:12px;letter-spacing:.08em;color:var(--ink)}
+.get-dl .note{margin-top:16px;max-width:none}
+/* 下载事实三格：一行讲清各平台怎么跑 */
+.dl-facts{display:grid;grid-template-columns:repeat(3,1fr);margin-top:24px;border-top:1px solid var(--rule-strong)}
+.dl-facts>div{padding:14px 16px 0 0;border-right:1px solid var(--rule);font-size:12.5px;color:var(--slate);line-height:1.6}
+.dl-facts>div:nth-child(n+2){padding-left:16px}
+.dl-facts>div:last-child{border-right:none}
+.dl-facts b{display:block;font-family:var(--font-display);font-weight:700;font-size:12px;letter-spacing:.1em;color:var(--ink);margin-bottom:4px}
+.dl-facts code{font-family:var(--font-mono);font-size:11.5px;background:var(--paper-2);border:1px solid var(--rule);padding:1px 6px}
+/* 联系卡：两列——左二维码，右列纵向铺满（标题 / 两行 / 价格 chips / 小字），消除右上空白 */
+.contact{display:grid;grid-template-columns:148px 1fr;gap:22px;align-items:stretch;border:1px solid var(--rule-strong);background:var(--paper);padding:22px 24px}
+.contact img{width:148px;height:148px;border:1px solid var(--rule);align-self:center}
+.contact-col{display:flex;flex-direction:column;justify-content:space-between;gap:10px;min-height:148px}
+.contact-title{font-size:15px;font-weight:700}
+.contact-lines span{display:block;font-size:13px;color:var(--slate);line-height:1.7}
+.contact .nowrap{display:inline;white-space:nowrap;font-family:var(--font-mono);color:var(--ink);font-weight:600}
+.price-chips{display:flex;gap:8px;flex-wrap:wrap}
+.price-chips span{border:1px solid var(--rule-strong);padding:4px 10px;font-family:var(--font-display);font-weight:600;font-size:12px;letter-spacing:.06em;color:var(--ink)}
+.contact-fine{font-size:11.5px;color:var(--slate);letter-spacing:.04em}
+/* 用户协议页内弹窗（与工作台同一套视觉） */
+.modal-backdrop{position:fixed;inset:0;z-index:140;background:rgba(16,20,43,.55);display:grid;place-items:center;padding:24px;overflow:auto}
+.modal-backdrop[hidden]{display:none}
+.modal{position:relative;width:min(680px,92vw);max-height:90vh;overflow:auto;background:var(--paper);border:1px solid var(--ink);box-shadow:0 30px 80px rgba(16,20,43,.35);text-align:left}
+.modal::before{content:"";position:absolute;top:0;left:0;right:0;height:6px;background-image:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="36" height="6" viewBox="0 0 36 6"><path d="M24 0l7 3-7 3z" fill="%2310142B"/></svg>');background-repeat:repeat-x}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:22px 26px 0 28px}
+.modal-title{font-family:var(--font-display);font-weight:700;font-size:13px;letter-spacing:.16em;color:var(--slate);text-transform:uppercase}
+.modal-x{background:none;border:none;color:var(--slate);cursor:pointer;font-size:20px;line-height:1;padding:4px 8px}
+.eula-body{max-height:56vh;overflow:auto;margin:14px 28px 0;padding:14px 16px;border:1px solid var(--rule);background:#FFFDF7;font-size:12.5px;line-height:1.85;white-space:pre-wrap;color:#2B2F45}
+.modal-foot{display:flex;justify-content:flex-end;padding:16px 28px 22px}
+.modal-foot .btn-primary{padding:11px 22px;font-size:13px}
+body.modal-open{overflow:hidden}
 @media(max-width:1180px){
   .get-grid{grid-template-columns:repeat(2,1fr)}
   .plan{border-bottom:1px solid var(--rule)}
@@ -214,7 +259,9 @@ nav{
 @media(max-width:880px){
   .sample-grid{grid-template-columns:1fr}
   .sample-grid .demo-arrow{transform:rotate(90deg);padding:16px 0}
-  .sample-facts,.get-steps,.get-grid,.get-bottom{grid-template-columns:1fr}
+  .sample-facts,.get-steps,.get-grid,.get-bottom,.dl-facts,.contact{grid-template-columns:1fr}
+  .dl-facts>div{border-right:none;padding-left:0;border-bottom:1px solid var(--rule);padding-bottom:12px}
+  .dl-facts>div:last-child{border-bottom:none}
   .plan{border-right:none;border-bottom:1px solid var(--rule)}
   .plan:last-child{border-bottom:none}
 }
@@ -259,7 +306,7 @@ nav{
 .wb-res-kv{margin:10px 0 12px;font-family:var(--font-mono);font-size:11px;color:var(--slate);font-variant-numeric:tabular-nums}
 .wb-dl{display:inline-block;background:var(--ink);color:var(--paper);font-family:var(--font-display);font-weight:600;font-size:12px;letter-spacing:.06em;padding:10px 18px;cursor:default}
 .wb-res-preview{margin-top:12px;padding:12px;background:var(--ink);color:rgba(244,241,232,.92);font-family:var(--font-mono);font-size:10.5px;line-height:1.6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.wb-notes{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--rule-strong);margin-top:40px}
+.wb-notes{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--rule-strong);margin-top:40px;margin-bottom:64px}   /* 与其后墨蓝区留白 */
 .wb-note{padding:20px 22px 4px 0;font-size:12.5px;color:var(--slate);line-height:1.7;border-right:1px solid var(--rule)}
 .wb-note:nth-child(n+2){padding-left:22px}
 .wb-note:last-child{border-right:none}
@@ -453,48 +500,12 @@ footer{background:var(--ink);color:var(--paper)}
         <div class="step-d">样式内置于文档内部。继续编辑、批注、打印，随你；工具不锁定任何格式。</div>
       </div>
     </div>
-
-    <div class="demo" aria-label="课件转笔记示意" data-reveal>
-      <div>
-        <div class="doc">
-          <div class="doc-head"><span>courseware.pptx</span><span>16:9</span></div>
-          <div class="doc-body">
-            <div class="slide-t"></div>
-            <div class="bullet w90"></div>
-            <div class="bullet w75"></div>
-            <div class="bullet w62"></div>
-            <div class="bullet w80"></div>
-            <div class="bullet w50"></div>
-          </div>
-        </div>
-        <div class="doc-cap">课件</div>
-      </div>
-      <div class="demo-arrow" aria-hidden="true">
-        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
-      </div>
-      <div>
-        <div class="doc">
-          <div class="doc-head"><span>Lecture01.docx</span><span>A4</span></div>
-          <div class="doc-body">
-            <div class="note-h1"></div>
-            <div class="note-p w100"></div>
-            <div class="note-p w94"></div>
-            <div class="note-h2"></div>
-            <span class="note-tag">中文理解 · 9PT 斜体</span>
-            <div class="note-it"></div>
-            <div class="note-p w97"></div>
-            <div class="note-p w88"></div>
-          </div>
-        </div>
-        <div class="doc-cap">成品笔记 docx</div>
-      </div>
-    </div>
   </section>
 
   <section class="samples" id="samples">
     <div class="section-head" data-reveal>
       <h2>真实转换，不是示意图。</h2>
-      <p>IOM307 Lecture 1：60 页 PDF 课件，进去；9 页考点导向的笔记 docx，出来。云 AI 改写用时 2 分 49 秒，约 1.1 万 tokens。课件原页出于版权只作模糊示意。</p>
+      <p>一门商学院课程的第 1 讲：60 页 PDF 课件进去，9 页考点导向的笔记 docx 出来。云 AI 改写用时 2 分 49 秒。课件原页出于版权只作模糊示意。</p>
     </div>
     <div class="sample-grid" data-reveal>
       <figure class="sample before">
@@ -617,40 +628,49 @@ footer{background:var(--ink);color:var(--paper)}
       <p>Windows 双击即用；Mac 以源码运行。不注册账号，文件不出本机。解析与精排永久免费；云 AI 改写赠 3 次体验，之后用激活码解锁。</p>
     </div>
     <div class="get-grid">
-      <div class="plan" data-reveal>
+      <div class="plan t0" data-reveal>
+        <svg class="plan-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M11 5h26v9.8L24 23.4 37 31.8V43H11z"/></svg>
         <div class="plan-k">FREE</div>
-        <div class="plan-price">¥0</div>
-        <div class="plan-t">先把课件变成能读的笔记。</div>
-        <ul><li>PPT / PDF / Word / MD 五种格式解析</li><li>创作者级默认排版，docx 随便改</li><li>图表原位保留，关键图表智能筛选</li><li>三套排版风格 · 课程档案自由设定</li><li>云 AI 改写体验 3 次</li><li>本地运行，不注册，文件不出本机</li></ul>
+        <div class="plan-price"><span class="cur">¥</span><span class="num">0</span></div>
+        <div class="plan-meta">不需激活码</div>
+        <div class="plan-t">解析 · 精排 · 导出。</div>
+        <ul><li>PPT · PDF · Word · MD</li><li>精排版 · docx 可编辑</li><li>三套风格 · 课程档案</li><li>云 AI 体验 3 次</li></ul>
       </div>
-      <div class="plan" data-reveal style="--d:.06s">
+      <div class="plan t1" data-reveal style="--d:.06s">
+        <svg class="plan-ico" viewBox="0 0 48 48" aria-hidden="true"><path class="f" d="M6 16l8 4-8 4zM20 16l8 4-8 4zM34 16l8 4-8 4z"/><path d="M6 32h36M6 37h22"/></svg>
         <div class="plan-k">SPRINT</div>
-        <div class="plan-price"><s>¥19.9</s>¥14.9<small>/ 10 次</small></div>
-        <div class="plan-t">一门课的考前冲刺，十次够用。</div>
-        <ul><li>包含 FREE 全部，另加：</li><li>10 次云 AI 改写：知识点重组、双语理解、逐节自测、术语表、考点清单</li><li>用完可叠加，一年内有效</li><li>粘贴即生效，不联网验证</li></ul>
+        <div class="plan-price"><span class="cur">¥</span><span class="num">14.9</span><small>/ 10 次</small></div>
+        <div class="plan-meta"><s>标价 ¥19.9</s> · 首学期立减 ¥5</div>
+        <div class="plan-t">单门课的考前冲刺。</div>
+        <ul><li>包含 FREE 功能</li><li>Pivot 1 引擎</li><li>10 次云 AI 改写</li><li>一年内有效 · 可叠加</li></ul>
       </div>
       <div class="plan hot" data-reveal style="--d:.12s">
-        <div class="plan-k">PLUS <span class="plan-badge">主推</span></div>
-        <div class="plan-price"><s>¥79</s>¥49<small>/ 学期</small></div>
-        <div class="plan-t">整个学期，所有课，不限次。</div>
-        <ul><li>包含 FREE 全部，另加：</li><li>全学期所有课程，云 AI 改写不限次</li><li>完整 AI 产物：重组、双语理解、逐节自测、术语表、考点清单、AI 标题</li><li>有效期至本学期末</li><li>对照：一份均分 70+ 同学的精编笔记约 ¥140，只覆盖一门课</li></ul>
-        <div class="plan-foot">约 ¥12 / 门（按 4 门课计）</div>
+        <svg class="plan-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M15 4h24v9.4L27 21.4 39 29.4V40H15z" opacity=".45"/><path d="M9 9h24v9.4L21 26.4 33 34.4V45H9z"/></svg>
+        <div class="plan-k">PLUS</div>
+        <div class="plan-price"><span class="cur">¥</span><span class="num">49</span><small>/ 学期</small></div>
+        <div class="plan-meta"><s>标价 ¥79</s> · 首学期立减 ¥30</div>
+        <div class="plan-t">整个学期不限次。</div>
+        <ul><li>包含 FREE 功能</li><li>Pivot 1 引擎</li><li>全学期 · 所有课 · 不限次</li><li>自测 · 术语表 · 考点清单</li><li>有效期至学期末</li></ul>
       </div>
-      <div class="plan" data-reveal style="--d:.18s">
+      <div class="plan t2" data-reveal style="--d:.18s">
+        <svg class="plan-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 10h20v7L14 24l12 7v12H6z"/><path d="M42 10H22v7l12 7-12 7v12h20z"/></svg>
         <div class="plan-k">DUO</div>
-        <div class="plan-price"><s>¥129</s>¥89<small>/ 学期 · 两人</small></div>
+        <div class="plan-price"><span class="cur">¥</span><span class="num">89</span><small>/ 学期 · 两人</small></div>
+        <div class="plan-meta"><s>标价 ¥129</s> · 每人 ¥44.5</div>
         <div class="plan-t">两个人的学期码。</div>
-        <ul><li>两枚独立 PLUS 学期码，两台电脑各自激活</li><li>每人 ¥44.5，比两枚单买再省 ¥9</li><li>其余权益与 PLUS 完全一致</li><li>适合和室友、同专业同学一起买</li></ul>
+        <ul><li>包含 FREE 功能</li><li>Pivot 1 引擎</li><li>两枚独立学期码 · 各自激活</li><li>每人 ¥44.5</li></ul>
       </div>
       <div class="plan next" data-reveal style="--d:.24s">
+        <svg class="plan-ico" viewBox="0 0 48 48" aria-hidden="true"><path class="f" d="M11 5h26v9.8L24 23.4 37 31.8V43H11z"/><path class="f" d="M4 37h13v8H4z"/></svg>
         <div class="plan-k">PRO <span class="plan-badge">NEXT</span></div>
-        <div class="plan-price">¥129<small>/ 学期</small></div>
-        <div class="plan-t">更强的模型，更完整的备考套件。</div>
-        <ul><li>包含 PLUS 全部，另加（预计）：</li><li>更强的改写模型</li><li>整门课自测合成冲刺卷，可打印、可遮答案</li><li>术语表导出记忆卡片（Anki 等）</li><li>新功能优先体验</li></ul>
-        <div class="plan-foot">即将推出，暂不可购买。想第一时间知道？在下方联系处留个微信。</div>
+        <div class="plan-price"><span class="cur">¥</span><span class="num">129</span><small>/ 学期</small></div>
+        <div class="plan-meta">NEXT · 暂不可购买</div>
+        <div class="plan-t">更强的引擎和功能。</div>
+        <ul><li>包含 FREE 所有功能</li><li>包含 PLUS 所有功能</li><li>Pivot 1 Pro 引擎</li><li>整门课冲刺卷 · Anki 术语卡</li><li>新功能优先体验</li></ul>
+        <div class="plan-foot">即将推出，暂不可购买。想第一时间知道？在下方留个微信。</div>
       </div>
     </div>
-    <p class="get-term" data-reveal>划线为标价，现价为<b>首学期内测价，2026 春季学期起恢复标价</b>。套餐与价格以本页为准。</p>
+    <p class="get-term" data-reveal>划线为标价，现价为<b>首学期内测价，2026 春季学期起恢复标价</b>。</p>
     <div class="get-steps" data-reveal>
       <div><b>01</b>下载对应平台的 zip，解压到任意文件夹。</div>
       <div><b>02</b>Windows 双击 Notera.exe；Mac 在终端执行 bash run.sh。浏览器自动打开工作台。</div>
@@ -659,18 +679,26 @@ footer{background:var(--ink);color:var(--paper)}
     <div class="get-bottom" data-reveal>
       <div class="get-dl">
         <div class="cta-row">
-          <a class="btn-primary" id="dlBtn" href="https://wwauz.lanzouw.com/ifvK448pqm4f" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>下载 Windows 版 · 44 MB</a>
-          <a class="btn-ghost" id="dlBtnMac" href="https://wwauz.lanzouw.com/i6WqW48pqm7i" target="_blank" rel="noopener">下载 Mac 版 · 源码运行 · 0.8 MB</a>
-          <a class="btn-ghost" href="#contact" id="buyLink">下载后想解锁 AI？买激活码 →</a>
+          <a class="btn-primary" id="dlBtn" href="https://wwauz.lanzouw.com/iVpON48qyhqb" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>下载 Windows 版 · 44 MB</a>
+          <a class="btn-ghost" id="dlBtnMac" href="https://wwauz.lanzouw.com/iipaO48qyhrc" target="_blank" rel="noopener">下载 Mac 版 · 源码运行 · 0.8 MB</a>
         </div>
-        <p class="note">下载和解析排版都免费，云 AI 改写赠 3 次；激活码只在你想继续用 AI 时才需要，<b>两个平台通用</b>。<br><b>Windows 10 / 11</b>：解压双击 Notera.exe。首次运行若提示「Windows 已保护你的电脑」，点「更多信息 → 仍要运行」——这是未购买数字签名的独立软件都会遇到的提示，软件不联网上传你的任何文件。<br><b>Mac</b>：以源码方式运行，需要先装一次 Python 3（免费），解压后在终端执行 <code>bash run.sh</code>，浏览器自动打开；详细步骤在包内《使用说明》。<br>下载或使用即视为同意 <a href="eula.txt" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">《用户协议》</a>（安装包内也有一份）。</p>
+        <div class="dl-facts">
+          <div><b>Windows 10 / 11</b><span>解压，双击 Notera.exe</span></div>
+          <div><b>Mac</b><span>需 Python 3，终端执行 <code>bash run.sh</code></span></div>
+          <div><b>激活码</b><span>两平台通用 · 免费体验 3 次</span></div>
+        </div>
+        <p class="note">首次运行若提示「Windows 已保护你的电脑」，点「更多信息 → 仍要运行」（未数字签名的独立软件通用提示）。下载或使用即视为同意 <a href="eula.txt" id="eulaLink" style="color:inherit;text-decoration:underline">《用户协议》</a>。</p>
       </div>
       <div class="contact" id="contact">
         <img src="assets/wechat-qr.png" alt="Ian 的微信二维码" width="148" height="148" loading="lazy">
-        <div>
-          <b>加微信买激活码</b>
-          <span>扫码，或搜手机号 <span id="wxId">18937139088</span>，备注「Notera」。付款后即刻发码，粘贴进「激活」页就能用。</span>
-          <span class="contact-price">PLUS ¥49 · DUO ¥89 · SPRINT ¥14.9 · 首学期内测价</span>
+        <div class="contact-col">
+          <b class="contact-title">购买激活码</b>
+          <div class="contact-lines">
+            <span>微信搜索 <span id="wxId" class="nowrap">18937139088</span>，备注「Notera」</span>
+            <span>付款后即刻发码，粘贴进「激活」页即用</span>
+          </div>
+          <div class="price-chips"><span>PLUS ¥49</span><span>DUO ¥89</span><span>SPRINT ¥14.9</span></div>
+          <span class="contact-fine">首学期内测价 · 2026 春季学期起恢复标价</span>
         </div>
       </div>
     </div>
@@ -724,7 +752,33 @@ footer{background:var(--ink);color:var(--paper)}
   </footer>
 </div>
 
+<!-- 用户协议：页内弹窗（fetch eula.txt；失败则退回链接直开） -->
+<div class="modal-backdrop" id="eulaModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="eulaTitle">
+    <div class="modal-head"><span class="modal-title" id="eulaTitle">用户协议</span><button type="button" class="modal-x" id="eulaClose" aria-label="关闭">×</button></div>
+    <div class="eula-body" id="eulaBody">加载中…</div>
+    <div class="modal-foot"><button type="button" class="btn-primary" id="eulaOk">同意</button></div>
+  </div>
+</div>
+
 <script>
+// 用户协议弹窗
+(function(){
+  const link = document.getElementById('eulaLink'), m = document.getElementById('eulaModal');
+  if(!link || !m) return;
+  const close = () => { m.hidden = true; document.body.classList.remove('modal-open'); };
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    m.hidden = false; document.body.classList.add('modal-open');
+    fetch('eula.txt', {cache: 'no-store'}).then(r => { if(!r.ok) throw 0; return r.text(); })
+      .then(t => { document.getElementById('eulaBody').textContent = t; })
+      .catch(() => { close(); window.open('eula.txt', '_blank', 'noopener'); });   // file:// 双击打开时 fetch 不可用 → 直开
+  });
+  document.getElementById('eulaClose').onclick = close;
+  document.getElementById('eulaOk').onclick = close;
+  m.addEventListener('click', e => { if(e.target === m) close(); });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && !m.hidden) close(); });
+})();
 // 滚动入场：进入视口即揭幕，一次性
 (function(){
   const els = document.querySelectorAll('[data-reveal]');
