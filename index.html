@@ -170,18 +170,27 @@ nav{
 
 /* ---------- 获取 / 定价 ---------- */
 .get{margin-bottom:48px}
-.get-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--rule-strong)}
-.plan{padding:28px 26px 30px;border-right:1px solid var(--rule);display:flex;flex-direction:column}
+.get-grid{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--rule-strong)}
+.plan{padding:24px 20px 26px;border-right:1px solid var(--rule);display:flex;flex-direction:column}
 .plan:last-child{border-right:none}
 .plan.hot{background:var(--ink);color:var(--paper)}
+.plan.next{background:rgba(16,20,43,.035);color:var(--slate)}
 .plan-k{font-family:var(--font-display);font-weight:900;font-size:12px;letter-spacing:.16em;color:var(--slate)}
 .plan.hot .plan-k{color:rgba(244,241,232,.6)}
-.plan-price{font-family:var(--font-display);font-weight:900;font-size:44px;line-height:1.1;margin:14px 0 6px}
-.plan-price small{font-size:14px;font-weight:600;letter-spacing:.04em;margin-left:4px}
-.plan-t{font-weight:700;font-size:15px;margin-bottom:14px}
-.plan ul{list-style:none;padding:0;margin:0;font-size:13.5px;color:var(--slate);line-height:1.8}
+.plan-badge{display:inline-block;margin-left:8px;padding:2px 6px;border:1px solid currentColor;font-size:9.5px;letter-spacing:.14em;vertical-align:middle;font-weight:700}
+.plan-price{font-family:var(--font-display);font-weight:900;font-size:34px;line-height:1.1;margin:14px 0 6px}
+.plan-price s{display:block;font-size:14px;font-weight:600;color:var(--slate);text-decoration:line-through;letter-spacing:.02em;margin-bottom:2px}
+.plan.hot .plan-price s{color:rgba(244,241,232,.55)}
+.plan.next .plan-price{color:var(--slate)}
+.plan-price small{font-size:13px;font-weight:600;letter-spacing:.04em;margin-left:4px}
+.plan-t{font-weight:700;font-size:14.5px;margin-bottom:14px}
+.plan ul{list-style:none;padding:0;margin:0;font-size:13px;color:var(--slate);line-height:1.75}
 .plan.hot ul{color:rgba(244,241,232,.78)}
 .plan li::before{content:"–";margin-right:8px}
+.plan-foot{margin-top:auto;padding-top:14px;font-size:12px;color:var(--slate);line-height:1.6}
+.plan.hot .plan-foot{color:rgba(244,241,232,.7)}
+.get-term{margin:14px 0 0;font-size:12.5px;color:var(--slate);line-height:1.7}
+.get-term b{color:var(--ink);font-weight:600}
 .get-steps{display:grid;grid-template-columns:repeat(3,1fr);margin-top:36px;border-top:1px solid var(--rule-strong)}
 .get-steps>div{padding:20px 22px 0 0;font-size:13.5px;color:var(--slate);line-height:1.7;border-right:1px solid var(--rule)}
 .get-steps>div:nth-child(n+2){padding-left:22px}
@@ -196,6 +205,12 @@ nav{
 .contact b{display:block;font-size:15px;margin-bottom:6px}
 .contact span{display:block;font-size:12.5px;color:var(--slate);line-height:1.7}
 .contact .contact-price{margin-top:10px;font-family:var(--font-display);font-weight:600;font-size:12px;letter-spacing:.08em;color:var(--ink)}
+@media(max-width:1180px){
+  .get-grid{grid-template-columns:repeat(2,1fr)}
+  .plan{border-bottom:1px solid var(--rule)}
+  .plan:nth-child(2n){border-right:none}
+  .plan:last-child{border-bottom:none}
+}
 @media(max-width:880px){
   .sample-grid{grid-template-columns:1fr}
   .sample-grid .demo-arrow{transform:rotate(90deg);padding:16px 0}
@@ -605,22 +620,37 @@ footer{background:var(--ink);color:var(--paper)}
       <div class="plan" data-reveal>
         <div class="plan-k">FREE</div>
         <div class="plan-price">¥0</div>
-        <div class="plan-t">解析 + 精排 + 导出</div>
-        <ul><li>五种格式解析，图表原位保留</li><li>创作者级默认排版，docx 随便改</li><li>云 AI 改写体验 3 次</li></ul>
+        <div class="plan-t">先把课件变成能读的笔记。</div>
+        <ul><li>PPT / PDF / Word / MD 五种格式解析</li><li>创作者级默认排版，docx 随便改</li><li>图表原位保留，关键图表智能筛选</li><li>三套排版风格 · 课程档案自由设定</li><li>云 AI 改写体验 3 次</li><li>本地运行，不注册，文件不出本机</li></ul>
       </div>
-      <div class="plan hot" data-reveal style="--d:.08s">
-        <div class="plan-k">SEMESTER</div>
-        <div class="plan-price">¥39<small>/ 学期</small></div>
-        <div class="plan-t">学期码 · 云 AI 改写不限次</div>
-        <ul><li>所有课程、整个学期，不限次数</li><li>考点导向 · 每节自测 · 术语对照表</li><li>对照：一份人工笔记 ¥140，只覆盖一门课</li></ul>
-      </div>
-      <div class="plan" data-reveal style="--d:.16s">
+      <div class="plan" data-reveal style="--d:.06s">
         <div class="plan-k">SPRINT</div>
-        <div class="plan-price">¥9.9</div>
-        <div class="plan-t">额度码 · 10 次改写</div>
-        <ul><li>单门课冲刺够用</li><li>用完可叠加</li><li>粘贴即生效，不联网验证</li></ul>
+        <div class="plan-price"><s>¥19.9</s>¥14.9<small>/ 10 次</small></div>
+        <div class="plan-t">一门课的考前冲刺，十次够用。</div>
+        <ul><li>包含 FREE 全部，另加：</li><li>10 次云 AI 改写：知识点重组、双语理解、逐节自测、术语表、考点清单</li><li>用完可叠加，一年内有效</li><li>粘贴即生效，不联网验证</li></ul>
+      </div>
+      <div class="plan hot" data-reveal style="--d:.12s">
+        <div class="plan-k">PLUS <span class="plan-badge">主推</span></div>
+        <div class="plan-price"><s>¥79</s>¥49<small>/ 学期</small></div>
+        <div class="plan-t">整个学期，所有课，不限次。</div>
+        <ul><li>包含 FREE 全部，另加：</li><li>全学期所有课程，云 AI 改写不限次</li><li>完整 AI 产物：重组、双语理解、逐节自测、术语表、考点清单、AI 标题</li><li>有效期至本学期末</li><li>对照：一份均分 70+ 同学的精编笔记约 ¥140，只覆盖一门课</li></ul>
+        <div class="plan-foot">约 ¥12 / 门（按 4 门课计）</div>
+      </div>
+      <div class="plan" data-reveal style="--d:.18s">
+        <div class="plan-k">DUO</div>
+        <div class="plan-price"><s>¥129</s>¥89<small>/ 学期 · 两人</small></div>
+        <div class="plan-t">两个人的学期码。</div>
+        <ul><li>两枚独立 PLUS 学期码，两台电脑各自激活</li><li>每人 ¥44.5，比两枚单买再省 ¥9</li><li>其余权益与 PLUS 完全一致</li><li>适合和室友、同专业同学一起买</li></ul>
+      </div>
+      <div class="plan next" data-reveal style="--d:.24s">
+        <div class="plan-k">PRO <span class="plan-badge">NEXT</span></div>
+        <div class="plan-price">¥129<small>/ 学期</small></div>
+        <div class="plan-t">更强的模型，更完整的备考套件。</div>
+        <ul><li>包含 PLUS 全部，另加（预计）：</li><li>更强的改写模型</li><li>整门课自测合成冲刺卷，可打印、可遮答案</li><li>术语表导出记忆卡片（Anki 等）</li><li>新功能优先体验</li></ul>
+        <div class="plan-foot">即将推出，暂不可购买。想第一时间知道？在下方联系处留个微信。</div>
       </div>
     </div>
+    <p class="get-term" data-reveal>划线为标价，现价为<b>首学期内测价，2026 春季学期起恢复标价</b>。套餐与价格以本页为准。</p>
     <div class="get-steps" data-reveal>
       <div><b>01</b>下载 zip，解压到任意文件夹。</div>
       <div><b>02</b>双击 Notera.exe，浏览器自动打开工作台。</div>
@@ -639,7 +669,7 @@ footer{background:var(--ink);color:var(--paper)}
         <div>
           <b>加微信买激活码</b>
           <span>扫码，或搜手机号 <span id="wxId">18937139088</span>，备注「Notera」。付款后即刻发码，粘贴进「激活」页就能用。</span>
-          <span class="contact-price">学期码 ¥39 · 额度码 ¥9.9</span>
+          <span class="contact-price">PLUS ¥49 · DUO ¥89 · SPRINT ¥14.9 · 首学期内测价</span>
         </div>
       </div>
     </div>
