@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Notera 枢页 — 让笔记像你写的</title>
-<meta name="description" content="Notera 枢页：本地运行的课件转笔记工具。上传 PPT 或 PDF，套用你的排版规范，导出可直接编辑的 docx。文件不出本机。">
+<meta name="description" content="Notera 枢页：把课件变成你自己的复习笔记。上传 PPT / PDF，套用你的排版规范，导出可编辑 docx；一学期 13 节课的成品可一次合并成整门课笔记。">
 <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-16 -2 104 124"><path d="M0 0 H84 V29 L38 60 L84 91 V120 H0 Z" fill="%2310142B"/><rect x="-13" y="99" width="34" height="34" fill="%23D8412F"/></svg>'>
 <style>
 /*
@@ -140,6 +140,22 @@ nav{
 .step:hover .step-n::after{transform:scaleX(1)}
 .step-t{font-size:18px;font-weight:700;margin-bottom:8px}
 .step-d{font-size:14px;color:var(--slate);line-height:1.7}
+/* ---------- 这不是「把课件喂给 AI」（回应"和喂 prompt 有什么区别"，不给竞品留名字） ---------- */
+.why{border-top:1px solid var(--rule-strong);padding:44px 0 8px;max-width:66ch;margin-top:-50px;margin-bottom:56px}
+.why h3{font-size:clamp(21px,2.4vw,26px);font-weight:700;margin-bottom:20px}
+.why p{color:var(--slate);font-size:15px;line-height:1.75}
+.why p + p{margin-top:14px}
+.why em{font-style:normal;color:var(--ink);font-weight:600}
+.why-close{margin-top:26px !important;padding-top:22px;border-top:1px solid var(--rule)}
+.why-close b{color:var(--ink);font-size:16.5px;font-weight:700}
+/* ---------- 一门课，一次转完（整门课合并，NOW） ---------- */
+.merge{margin-bottom:56px}
+.merge-facts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule-strong)}
+.merge-facts>div{padding:20px 22px 24px 0;font-size:13.5px;color:var(--slate);line-height:1.7;border-right:1px solid var(--rule)}
+.merge-facts>div:nth-child(n+2){padding-left:22px}
+.merge-facts>div:last-child{border-right:none}
+.merge-facts b{display:block;color:var(--ink);font-size:14.5px;margin-bottom:4px}
+@media (max-width:720px){.merge-facts{grid-template-columns:1fr}.merge-facts>div{border-right:none;border-bottom:1px solid var(--rule);padding-left:0}}
 
 /* ---------- 转换演示 ---------- */
 .demo{display:grid;grid-template-columns:1fr 64px 1fr;gap:0;align-items:center;margin-bottom:96px}
@@ -473,7 +489,7 @@ footer{background:var(--ink);color:var(--paper)}
     </svg>
     <h1 data-reveal style="--d:.08s">NOTES THAT<br>SOUND LIKE YOU.</h1>
     <div class="cn-slogan" data-reveal style="--d:.16s">让笔记像你写的。</div>
-    <p class="lede" data-reveal style="--d:.24s">课件交进来，一份<b>像你写的</b> docx 交出去。<b>结构跟着课件走</b>：讲次、标题、小节与原课件一一对应，随手翻回去就能核对；素材只来自你的课件，不加外部内容。解析与排版在本机完成。</p>
+    <p class="lede" data-reveal style="--d:.24s">课件交进来，一份<b>像你写的</b> docx 交出去。<b>结构跟着课件走</b>：讲次、标题、小节与原课件一一对应，随手翻回去就能核对；素材只来自你的课件，不加外部内容。解析与排版在本机完成，期末把 13 节的成品一次合并。</p>
     <div class="cta-row" data-reveal style="--d:.32s">
       <a class="btn-primary" href="#get"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>免费获取</a>
       <a class="btn-ghost" href="#samples">看真实样张</a>
@@ -481,6 +497,7 @@ footer{background:var(--ink);color:var(--paper)}
     <div class="trust-row" data-reveal style="--d:.38s">
       <div class="trust"><b>结构跟着课件走</b><span>讲次与标题对应原课件，不套模板，读到哪一节都能翻回原页核对。</span></div>
       <div class="trust"><b>素材只来自课件</b><span>不联网检索、不加外部内容；英文术语原文保留，理解段用中文写透。</span></div>
+      <div class="trust"><b>一门课，一次转完</b><span>勾选一学期的成品，一次生成编号连续的整门课笔记。</span></div>
       <div class="trust"><b>逐页对照<span class="plan-badge">NEXT</span></b><span>结果页左边原课件页、右边生成段落并排核对，下一版上线。</span></div>
     </div>
     <p class="note" data-reveal style="--d:.44s">Windows 双击即用，无需安装 Python，安装包约 44 MB；Mac 用 0.8 MB 源码包运行（需 Python 3）。暂不支持平板与手机。</p>
@@ -497,24 +514,31 @@ footer{background:var(--ink);color:var(--paper)}
 
     <div class="section-head" data-reveal>
       <h2>三步，从课件到笔记。</h2>
-      <p>不是把 PPT 拍平成一段文字，而是解析、重组、排版，产出一份打开就能用的 Word 文档。</p>
+      <p>不是把 PPT 拍平成一段文字，而是解析、重组、排版，产出一份打开就能用的 Word 文档。这三步背后的规则都有出处。</p>
     </div>
     <div class="steps">
       <div class="step" data-reveal style="--d:0s">
-        <div class="step-n">01</div>
-        <div class="step-t">上传解析</div>
-        <div class="step-d">.pptx · .ppt · .pdf · .docx · .md 都进得来。标题层级、表格、图片位置原样保留，课件的结构完整进入 markdown。</div>
+        <div class="step-n">01 · 每周</div>
+        <div class="step-t">随手转本周课件</div>
+        <div class="step-d">.pptx · .ppt · .pdf · .docx · .md 都进得来。上传 → 解析 → 套规范 → 导出 docx，成品自动存进这门课的课程档案。</div>
       </div>
       <div class="step" data-reveal style="--d:.1s">
-        <div class="step-n">02</div>
-        <div class="step-t">套用规范</div>
-        <div class="step-d">从手工精排的笔记里逐段比对反推出的五条规范（F1–F5），渲染时自动施加，一份都不走样。</div>
+        <div class="step-n">02 · 期中</div>
+        <div class="step-t">缺哪讲补哪讲</div>
+        <div class="step-d">每份成品都在课程详情里，随时下载、随时改。样式内置于文档内部，继续编辑、批注、打印，工具不锁定任何格式。</div>
       </div>
       <div class="step" data-reveal style="--d:.2s">
-        <div class="step-n">03</div>
-        <div class="step-t">导出 docx</div>
-        <div class="step-d">样式内置于文档内部。继续编辑、批注、打印，随你；工具不锁定任何格式。</div>
+        <div class="step-n">03 · 期末</div>
+        <div class="step-t">整门课一次合并</div>
+        <div class="step-d">课程详情里勾选整门课的成品 → 一次合并 → 一份编号连续的整门课笔记；勾上 AI 汇总，再附一份跨讲考点清单。</div>
       </div>
+    </div>
+
+    <div class="why" data-reveal>
+      <h3>这不是「把课件喂给 AI」。</h3>
+      <p>你当然也能把课件丢给 AI，让它写一份笔记。你会拿到<em>内容</em>——然后自己排标题层级、自己删掉「本讲小结」这类课件模板话、自己把散在 13 节里的同一个概念并成一处、自己从几十张图里挑出真正有信息量的那两三张。</p>
+      <p>这些事每一步你都做得来，<em>只是每一步都要花时间</em>。Notera 做的是把它们全部固定下来：哪一层标题算一节、哪个词是术语、哪张图有信息量、中文理解段该多小、小节编号怎么跨讲连续——5 条排版规范、3 层解析回退、一套图片策展规则，都是从创作者手搓出几十万字的稿子里逐段比对反推的。</p>
+      <p class="why-close"><b>这些事你不用做第二遍。</b></p>
     </div>
   </section>
 
@@ -561,7 +585,7 @@ footer{background:var(--ink);color:var(--paper)}
       <div><b>三层结构</b>讲 → 节 → 小节自动编号，结构跟着课件走，不套模板。</div>
       <div><b>每节自测</b>按考试形式出题，文末附考点清单与中英术语对照表。</div>
       <div><b>中文理解</b>英文术语原样保留，理解段用中文写透，斜体弱化不抢正文。</div>
-      <div><b>图表精选</b>135 张候选图只留 3 张真正的框架图，照片与装饰全部淘汰。</div>
+      <div><b>图表精选</b>只留下真正带信息的框架图与表格——照片、装饰、无字截图全部淘汰，图量随课件页数走。</div>
     </div>
   </section>
 
@@ -618,6 +642,18 @@ footer{background:var(--ink);color:var(--paper)}
       <div class="wb-note"><b>墨点陪跑</b>改写的每一分钟，墨点都在工作条里陪你等。</div>
     </div>
   </section>
+
+  <section class="merge" id="merge">
+    <div class="section-head" data-reveal>
+      <h2>一门课，一次转完。</h2>
+      <p>一学期十几份课件，勾选起来一次生成——一份编号从头到尾连续、图片各归各讲、可附整门课考点清单的笔记。</p>
+    </div>
+    <div class="merge-facts" data-reveal>
+      <div><b>编号连续</b>按讲次排好，讲级「一、二、三」一路数下去，每讲的节级从 1. 重排；讲与讲之间自动分页。</div>
+      <div><b>图片各归各讲、不错位</b>每讲的图只出现在自己那讲的位置，不同讲的同名图互不覆盖。</div>
+      <div><b>考点清单跨讲归并</b>勾上「AI 考点汇总」，末尾多一节：按主题归并的整门课考点（标注来自哪几讲）、反复出现的核心概念、术语总表。算 1 次 AI 改写；不勾则纯合并，不扣次数。</div>
+    </div>
+  </section>
 </div>
 
 <section class="spec">
@@ -659,7 +695,7 @@ footer{background:var(--ink);color:var(--paper)}
   <section class="get" id="get">
     <div class="section-head" data-reveal>
       <h2>拿到 Notera。</h2>
-      <p>Windows 双击即用；Mac 以源码运行。不注册账号，文件不出本机。解析与精排永久免费；云 AI 改写赠 3 次体验，之后用激活码解锁。</p>
+      <p>Windows 双击即用；Mac 以源码运行。不注册账号、不上传课件。解析与精排永久免费；云 AI 改写赠 3 次体验，之后用激活码解锁。</p>
     </div>
     <div class="get-grid">
       <div class="plan t0" data-reveal>
@@ -760,7 +796,6 @@ footer{background:var(--ink);color:var(--paper)}
       <div class="feat-d">解析与排版都在你自己的电脑上完成，课件文件不上传；只有你打开云 AI 改写时，课件文字才会发给改写引擎。五种输入格式，三层解析引擎自动回退。</div>
     </div>
   </div>
-  <p class="note" data-reveal style="max-width:60ch;margin:26px 0 0"><span class="plan-badge">NEXT</span>&nbsp; <b>一门课，一次转完</b>：把一学期十几份课件合并成一份编号连续的笔记，附整门课考点清单。下一版上线。</p>
 
   <!-- 发布前：填入真实评价（原话、署名方式经本人同意）。PRODUCT.md 原则 4：不虚构、不改写、不美化。
        有 ≥3 条真实反馈前保持 hidden；结构照 .feats 四格即可。 -->
