@@ -1,6 +1,6 @@
 {
-  "version": "0.9.5",
-  "download": "https://wwauz.lanzouw.com/iVpON48qyhqb",
-  "download_mac": "https://wwauz.lanzouw.com/iipaO48qyhrc",
-  "notes": "品牌首屏与设置页重构、墨点陪跑、更新不再重置额度（激活码可能需重新粘贴一次）"
+  "version": "0.9.6",
+  "download": "https://wwauz.lanzouw.com/iL3XM48soqab",
+  "download_mac": "https://wwauz.lanzouw.com/iSogO48soqcd",
+  "notes": "整门课合并（勾选多讲一键合并，附 AI 考点汇总）、首次上手引导、激活与次数提示更清楚"
 }
