@@ -90,7 +90,7 @@ nav{
 }
 .cn-slogan{font-size:clamp(17px,2vw,22px);font-weight:600;letter-spacing:.08em}
 .cn-slogan::after{content:"";display:block;width:88px;height:3px;background:var(--ink);margin:26px auto 0}
-.lede{max-width:56ch;margin:0 auto 40px;color:var(--slate);font-size:16.5px}
+.lede{max-width:none;margin:0 auto 40px;color:var(--slate);font-size:16.5px}
 .lede b{color:var(--ink);font-weight:600}
 .cta-row{display:flex;gap:16px;justify-content:center;align-items:center;flex-wrap:wrap}
 .btn-primary{
@@ -129,7 +129,7 @@ nav{
 /* ---------- 三步 ---------- */
 .section-head{padding:64px 0 40px}
 .section-head h2{font-size:clamp(26px,3.4vw,38px);font-weight:700;line-height:1.25}
-.section-head p{color:var(--slate);margin-top:10px;max-width:60ch}
+.section-head p{color:var(--slate);margin-top:10px;max-width:none}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule-strong);margin-bottom:88px}
 .step{padding:30px 28px 34px 0;border-right:1px solid var(--rule);transition:background .2s}
 .step:hover{background:var(--paper-2)}
@@ -369,7 +369,7 @@ body.modal-open{overflow:hidden}
 .spec .spine-top{height:6px;background-image:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="36" height="6" viewBox="0 0 36 6"><path d="M24 0l7 3-7 3z" fill="%23F4F1E8"/></svg>');background-repeat:repeat-x;position:absolute;top:0;left:0;right:0}
 .spec-wrap{position:relative}
 .spec h2{font-size:clamp(26px,3.4vw,38px);font-weight:700;margin-bottom:12px}
-.spec .spec-sub{color:rgba(244,241,232,.72);max-width:62ch;margin-bottom:48px}
+.spec .spec-sub{color:rgba(244,241,232,.72);max-width:none;margin-bottom:48px}.spec .spec-sub span{font-size:14px}
 .spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid rgba(244,241,232,.28)}
 .spec-row{display:flex;gap:22px;padding:22px 26px 22px 0;border-bottom:1px solid rgba(244,241,232,.28);transition:background .2s}
 .spec-row:hover{background:rgba(244,241,232,.045)}
@@ -514,7 +514,7 @@ footer{background:var(--ink);color:var(--paper)}
     </svg>
     <h1 data-reveal style="--d:.08s">NOTES THAT<br>SOUND LIKE YOU.</h1>
     <div class="cn-slogan" data-reveal style="--d:.16s">让笔记像你写的。</div>
-    <p class="lede" data-reveal style="--d:.24s">课件交进来，一份<b>像你写的</b> docx 交出去。<b>结构跟着课件走</b>：讲次、标题、小节与原课件一一对应，随手翻回去就能核对；素材只来自你的课件，不加外部内容。解析与排版在本机完成，期末把 13 节的成品一次合并。</p>
+    <p class="lede" data-reveal style="--d:.24s">课件交进来，一份<b>像你写的</b> docx 交出去。<br><b>结构跟着课件走</b>：讲次、标题、小节与原课件一一对应，随手翻回去就能核对；素材只来自你的课件，不加外部内容。</p>
     <div class="cta-row" data-reveal style="--d:.32s">
       <a class="btn-primary" href="#get"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>免费获取</a>
       <a class="btn-ghost" href="#samples">看真实样张</a>
@@ -539,7 +539,7 @@ footer{background:var(--ink);color:var(--paper)}
 
     <div class="section-head" data-reveal>
       <h2>三步，从课件到笔记。</h2>
-      <p>不是把 PPT 拍平成文字，而是解析、重组、排版——这三步背后的规则都有出处。</p>
+      <p style="max-width:none">不是把 PPT 拍平成文字，而是解析、重组、排版——这三步背后的规则都有出处。</p>
     </div>
     <div class="steps">
       <div class="step" data-reveal style="--d:0s">
@@ -567,7 +567,7 @@ footer{background:var(--ink);color:var(--paper)}
         <p class="why-close"><b>这些事你不用做第二遍。</b></p>
       </div>
       <div class="why-art" data-reveal>
-        <img src="assets/why-illustration.svg?v=20260917b" alt="左：手动整理笔记的学生，脑子里全是步骤；右：用 Notera 一次合并出干净的整门课笔记" loading="lazy">
+        <img src="assets/why-illustration.svg?v=20260918d" alt="左：手动整理笔记的学生，脑子里全是步骤；右：用 Notera 一次合并出干净的整门课笔记" loading="lazy">
       </div>
     </div>
   </section>
@@ -575,7 +575,7 @@ footer{background:var(--ink);color:var(--paper)}
   <section class="samples" id="samples">
     <div class="section-head" data-reveal>
       <h2>担心 AI 读错？拿原页对着看。</h2>
-      <p>两组真实转换：一门 PDF 型、一门 PPT 型课件，各取一页原页与对应成品页并排。原页出于版权已模糊。</p>
+      <p style="max-width:none">两组真实转换：一门 PDF 型、一门 PPT 型课件，各取一页原页与对应成品页并排。<br><span style="font-size:13px">原页出于版权已模糊。</span></p>
     </div>
     <div class="sample-group-t" data-reveal><b>01 · PDF 型课件</b><span>一门商学院课程的第 1 讲：60 页 PDF 进去，9 页考点导向的笔记出来，云 AI 改写用时 2 分 49 秒。</span></div>
     <div class="sample-grid" data-reveal>
@@ -696,7 +696,7 @@ footer{background:var(--ink);color:var(--paper)}
   <div class="spine-top" aria-hidden="true"></div>
   <div class="shell spec-wrap">
     <h2 data-reveal>开箱是创作者风格，长期是你的风格。</h2>
-    <p class="spec-sub" data-reveal style="--d:.08s">内置一套从手工精排的笔记稿里逐段比对反推的默认排版，开箱就是能直接打印复习的成品。风格档已经上线：同一份内容，每个人导出自己的样子。</p>
+    <p class="spec-sub" data-reveal style="--d:.08s;max-width:none">内置一套从手工精排的笔记稿里逐段比对反推的默认排版，开箱就是能直接打印复习的成品。<br><span style="font-size:14px">风格档已经上线：同一份内容，每个人导出自己的样子。</span></p>
     <div class="spec-grid">
       <div class="spec-row" data-reveal style="--d:0s">
         <span class="spec-id">NOW</span>
@@ -731,7 +731,7 @@ footer{background:var(--ink);color:var(--paper)}
   <section class="get" id="get">
     <div class="section-head" data-reveal>
       <h2>拿到 Notera。</h2>
-      <p>Windows 双击即用；Mac 以源码运行。不注册账号、不上传课件。解析与精排永久免费；云 AI 改写赠 3 次体验，之后用激活码解锁。</p>
+      <p style="max-width:none">Windows 双击即用；Mac 以源码运行。不注册账号、不上传课件。<br>解析与精排永久免费；云 AI 改写赠 3 次体验，之后用激活码解锁。</p>
     </div>
     <div class="get-grid">
       <div class="plan t0" data-reveal>
@@ -812,7 +812,7 @@ footer{background:var(--ink);color:var(--paper)}
 
   <div class="section-head" data-reveal style="padding-bottom:32px">
     <h2>为什么是 Notera。</h2>
-    <p>不注册、不订阅、不锁定。它更像你自己的排版引擎，而不是又一个平台。</p>
+    <p style="max-width:none">不注册、不订阅、不锁定。它更像你自己的排版引擎，而不是又一个平台。</p>
   </div>
   <div class="feats">
     <div class="feat" data-reveal style="--d:0s">
