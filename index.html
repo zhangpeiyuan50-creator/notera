@@ -141,15 +141,20 @@ nav{
 .step-t{font-size:18px;font-weight:700;margin-bottom:8px}
 .step-d{font-size:14px;color:var(--slate);line-height:1.7}
 /* ---------- 这不是「把课件喂给 AI」（回应"和喂 prompt 有什么区别"，不给竞品留名字） ---------- */
-.why{border-top:1px solid var(--rule-strong);padding:44px 0 8px;max-width:66ch;margin-top:-50px;margin-bottom:56px}
-.why h3{font-size:clamp(21px,2.4vw,26px);font-weight:700;margin-bottom:20px}
-.why p{color:var(--slate);font-size:15px;line-height:1.75}
-.why p + p{margin-top:14px}
-.why em{font-style:normal;color:var(--ink);font-weight:600}
+.why{display:grid;grid-template-columns:0.8fr 1.2fr;gap:40px;align-items:center;border-top:1px solid var(--rule-strong);padding:44px 0 8px;margin-top:-50px;margin-bottom:56px}
+.why-copy h3{font-size:clamp(21px,2.4vw,26px);font-weight:700;margin-bottom:20px}
+.why-copy p{color:var(--slate);font-size:15px;line-height:1.75}
+.why-copy p + p{margin-top:14px}
+.why-copy em{font-style:normal;color:var(--ink);font-weight:600}
 .why-close{margin-top:26px !important;padding-top:22px;border-top:1px solid var(--rule)}
 .why-close b{color:var(--ink);font-size:16.5px;font-weight:700}
+.why-art img{width:100%;display:block}
+@media (max-width:860px){.why{grid-template-columns:1fr;gap:24px}}
 /* ---------- 一门课，一次转完（整门课合并，NOW） ---------- */
 .merge{margin-bottom:56px}
+.merge-shot{margin:0 0 30px;border:1px solid var(--rule-strong);background:var(--paper-2);padding:14px}
+.merge-shot img{width:100%;display:block;border:1px solid var(--rule)}
+.merge-shot figcaption{margin-top:10px;font-family:var(--font-mono);font-size:11.5px;color:var(--slate);letter-spacing:.02em}
 .merge-facts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule-strong)}
 .merge-facts>div{padding:20px 22px 24px 0;font-size:13.5px;color:var(--slate);line-height:1.7;border-right:1px solid var(--rule)}
 .merge-facts>div:nth-child(n+2){padding-left:22px}
@@ -309,12 +314,12 @@ body.modal-open{overflow:hidden}
 .wb-select i{position:absolute;right:14px;top:50%;width:8px;height:5px;margin-top:-2px;background:var(--ink);clip-path:polygon(0 0,100% 0,50% 100%)}
 .wb-mini-btn{flex-shrink:0;font-family:var(--font-display);font-weight:600;font-size:11.5px;letter-spacing:.06em;padding:0 14px;border:1px solid var(--ink);display:grid;place-items:center}
 .wb-sum{margin-top:10px;padding:9px 13px;border:1px solid var(--rule);background:var(--paper-2);font-size:12px;color:var(--slate)}
-.wb-file{display:flex;align-items:center;gap:12px;border:1px solid var(--rule-strong);background:var(--paper-2);padding:12px 14px}
+.wb-file{display:flex;align-items:center;gap:12px;border:1px solid var(--rule-strong);background:var(--paper-2);padding:12px 14px;cursor:pointer}
 .wb-file svg{width:15px;height:15px;stroke:var(--paper);fill:none;flex-shrink:0;background:var(--ink);padding:7px}
 .wb-file-name{font-size:13px;font-weight:600}
 .wb-file-size{margin-left:auto;font-family:var(--font-mono);font-size:11px;color:var(--slate)}
 .wb-check{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--slate);align-self:center}
-.wb-check b{width:14px;height:14px;background:var(--ink);position:relative;flex-shrink:0}
+.wb-check b{width:14px;height:14px;background:var(--ink);border:1px solid var(--ink);position:relative;flex-shrink:0;box-sizing:border-box}
 .wb-check b::after{content:"✓";position:absolute;inset:0;color:var(--paper);font-size:10px;display:grid;place-items:center}
 .wb-go{width:100%;margin-top:20px;padding:14px;border:none;cursor:pointer;background:var(--ink);color:var(--paper);font-family:var(--font-display);font-weight:600;font-size:14px;letter-spacing:.08em;display:flex;align-items:center;justify-content:center;gap:9px;transition:background .15s}
 .wb-go:hover{background:var(--ink-hover)}
@@ -333,11 +338,31 @@ body.modal-open{overflow:hidden}
 .wb-res-kv{margin:10px 0 12px;font-family:var(--font-mono);font-size:11px;color:var(--slate);font-variant-numeric:tabular-nums}
 .wb-dl{display:inline-block;background:var(--ink);color:var(--paper);font-family:var(--font-display);font-weight:600;font-size:12px;letter-spacing:.06em;padding:10px 18px;cursor:default}
 .wb-res-preview{margin-top:12px;padding:12px;background:var(--ink);color:rgba(244,241,232,.92);font-family:var(--font-mono);font-size:10.5px;line-height:1.6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.wb-notes{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--rule-strong);margin-top:40px;margin-bottom:64px}   /* 与其后墨蓝区留白 */
-.wb-note{padding:20px 22px 4px 0;font-size:12.5px;color:var(--slate);line-height:1.7;border-right:1px solid var(--rule)}
-.wb-note:nth-child(n+2){padding-left:22px}
-.wb-note:last-child{border-right:none}
-.wb-note b{display:block;color:var(--ink);font-size:13.5px;margin-bottom:4px}
+.wb-select.has-menu{cursor:pointer}
+.wb-select.has-menu:hover{background:var(--paper-2)}
+.wb-menu{margin-top:6px;border:1px solid var(--rule-strong);background:var(--paper)}
+.wb-menu[hidden]{display:none}
+.wb-menu div{padding:9px 14px;font-size:13px;cursor:pointer;border-bottom:1px solid var(--rule)}
+.wb-menu div:last-child{border-bottom:none}
+.wb-menu div:hover{background:var(--paper-2)}
+.wb-hint{color:var(--slate);font-style:normal;font-size:11px;letter-spacing:.04em;margin-left:6px}
+.wb-check{cursor:pointer;user-select:none}
+.wb-check:not(.on) b{background:var(--paper)}
+.wb-check:not(.on) b::after{content:""}
+.wb-saved{margin-top:12px;font-size:12.5px;color:var(--slate)}
+.wb-saved a{color:var(--ink);font-weight:600}
+.wb-wizard{margin-top:12px;border:1px solid var(--rule-strong);background:var(--paper);padding:14px}
+.wb-wizard[hidden]{display:none}
+.wb-wiz-t{display:flex;justify-content:space-between;font-size:12px;font-weight:700;letter-spacing:.06em;margin-bottom:12px}
+.wb-wiz-t span{font-family:var(--font-mono);color:var(--slate);font-weight:400}
+.wb-wiz-body input{width:100%;border:1px solid var(--rule-strong);padding:9px 12px;font-size:13px;background:var(--paper);font-family:inherit}
+.wb-wiz-body .wiz-chips{display:flex;gap:8px;flex-wrap:wrap}
+.wb-wiz-body .wiz-chip{border:1px solid var(--rule-strong);padding:7px 12px;font-size:12px;cursor:pointer}
+.wb-wiz-body .wiz-chip.on{background:var(--ink);color:var(--paper)}
+.wb-wiz-body .wiz-tip{font-size:11.5px;color:var(--slate);margin-top:8px}
+.wb-wiz-btns{display:flex;justify-content:flex-end;align-items:center;gap:14px;margin-top:14px}
+.wb-wiz-cancel{font-size:12px;color:var(--slate);cursor:pointer}
+.wb-check{cursor:pointer}
 
 /* ---------- 排版规范（墨蓝反白） ---------- */
 .spec{background:var(--ink);color:var(--paper);padding:84px 0}
@@ -495,10 +520,10 @@ footer{background:var(--ink);color:var(--paper)}
       <a class="btn-ghost" href="#samples">看真实样张</a>
     </div>
     <div class="trust-row" data-reveal style="--d:.38s">
-      <div class="trust"><b>结构跟着课件走</b><span>讲次与标题对应原课件，不套模板，读到哪一节都能翻回原页核对。</span></div>
-      <div class="trust"><b>素材只来自课件</b><span>不联网检索、不加外部内容；英文术语原文保留，理解段用中文写透。</span></div>
-      <div class="trust"><b>一门课，一次转完</b><span>勾选一学期的成品，一次生成编号连续的整门课笔记。</span></div>
-      <div class="trust"><b>逐页对照<span class="plan-badge">NEXT</span></b><span>结果页左边原课件页、右边生成段落并排核对，下一版上线。</span></div>
+      <div class="trust"><b>结构跟着课件走</b><span>讲次、标题对应原课件，不套模板。</span></div>
+      <div class="trust"><b>素材只来自课件</b><span>不联网检索、不加外部内容。</span></div>
+      <div class="trust"><b>一门课，一次转完</b><span>勾选一学期成品，一次生成整门课笔记。</span></div>
+      <div class="trust"><b>逐页对照<span class="plan-badge">NEXT</span></b><span>左原页、右段落并排核对，下一版上线。</span></div>
     </div>
     <p class="note" data-reveal style="--d:.44s">Windows 双击即用，无需安装 Python，安装包约 44 MB；Mac 用 0.8 MB 源码包运行（需 Python 3）。暂不支持平板与手机。</p>
   </section>
@@ -514,38 +539,43 @@ footer{background:var(--ink);color:var(--paper)}
 
     <div class="section-head" data-reveal>
       <h2>三步，从课件到笔记。</h2>
-      <p>不是把 PPT 拍平成一段文字，而是解析、重组、排版，产出一份打开就能用的 Word 文档。这三步背后的规则都有出处。</p>
+      <p>不是把 PPT 拍平成文字，而是解析、重组、排版——这三步背后的规则都有出处。</p>
     </div>
     <div class="steps">
       <div class="step" data-reveal style="--d:0s">
         <div class="step-n">01 · 每周</div>
         <div class="step-t">随手转本周课件</div>
-        <div class="step-d">.pptx · .ppt · .pdf · .docx · .md 都进得来。上传 → 解析 → 套规范 → 导出 docx，成品自动存进这门课的课程档案。</div>
+        <div class="step-d">.pptx · .pdf 等都进得来，解析、套规范、导出 docx，成品自动存进课程。</div>
       </div>
       <div class="step" data-reveal style="--d:.1s">
         <div class="step-n">02 · 期中</div>
         <div class="step-t">缺哪讲补哪讲</div>
-        <div class="step-d">每份成品都在课程详情里，随时下载、随时改。样式内置于文档内部，继续编辑、批注、打印，工具不锁定任何格式。</div>
+        <div class="step-d">每份成品都在课程详情里，随时下载、随时改，样式内置不锁定。</div>
       </div>
       <div class="step" data-reveal style="--d:.2s">
         <div class="step-n">03 · 期末</div>
         <div class="step-t">整门课一次合并</div>
-        <div class="step-d">课程详情里勾选整门课的成品 → 一次合并 → 一份编号连续的整门课笔记；勾上 AI 汇总，再附一份跨讲考点清单。</div>
+        <div class="step-d">勾选整门课的成品 → 一份编号连续的笔记，可再附跨讲考点清单。</div>
       </div>
     </div>
 
-    <div class="why" data-reveal>
-      <h3>这不是「把课件喂给 AI」。</h3>
-      <p>你当然也能把课件丢给 AI，让它写一份笔记。你会拿到<em>内容</em>——然后自己排标题层级、自己删掉「本讲小结」这类课件模板话、自己把散在 13 节里的同一个概念并成一处、自己从几十张图里挑出真正有信息量的那两三张。</p>
-      <p>这些事每一步你都做得来，<em>只是每一步都要花时间</em>。Notera 做的是把它们全部固定下来：哪一层标题算一节、哪个词是术语、哪张图有信息量、中文理解段该多小、小节编号怎么跨讲连续——5 条排版规范、3 层解析回退、一套图片策展规则，都是从创作者手搓出几十万字的稿子里逐段比对反推的。</p>
-      <p class="why-close"><b>这些事你不用做第二遍。</b></p>
+    <div class="why">
+      <div class="why-copy" data-reveal>
+        <h3>这不是「把课件喂给 AI」。</h3>
+        <p>你当然也能把课件丢给 AI。你会拿到<em>内容</em>——然后自己排标题层级、删掉「本讲小结」这类模板话、把散在 13 节里的重复概念并成一处、从几十张图里挑出有用的两三张。</p>
+        <p>每一步你都做得来，<em>只是每一步都要花时间</em>。Notera 把它们全部固定下来：5 条排版规范、3 层解析回退、一套图片策展规则，都来自创作者手搓几十万字稿子的逐段比对。</p>
+        <p class="why-close"><b>这些事你不用做第二遍。</b></p>
+      </div>
+      <div class="why-art" data-reveal>
+        <img src="assets/why-illustration.svg?v=20260917b" alt="左：手动整理笔记的学生，脑子里全是步骤；右：用 Notera 一次合并出干净的整门课笔记" loading="lazy">
+      </div>
     </div>
   </section>
 
   <section class="samples" id="samples">
     <div class="section-head" data-reveal>
       <h2>担心 AI 读错？拿原页对着看。</h2>
-      <p>两组真实转换，不是示意图：一门 PDF 型课件、一门 PPT 型课件，各取一页原页与对应的成品页放在一起。结构、术语、顺序是否跟着课件走，你自己核对。课件原页出于版权只作模糊示意。</p>
+      <p>两组真实转换：一门 PDF 型、一门 PPT 型课件，各取一页原页与对应成品页并排。原页出于版权已模糊。</p>
     </div>
     <div class="sample-group-t" data-reveal><b>01 · PDF 型课件</b><span>一门商学院课程的第 1 讲：60 页 PDF 进去，9 页考点导向的笔记出来，云 AI 改写用时 2 分 49 秒。</span></div>
     <div class="sample-grid" data-reveal>
@@ -592,7 +622,7 @@ footer{background:var(--ink);color:var(--paper)}
   <section class="wbdemo" id="workbench">
     <div class="section-head" data-reveal>
       <h2>工作台，长这样。</h2>
-      <p>不是示意图。下面这块是可以点的工作台重刻：选课程、核偏好，点一次，全流程当场走给你看。</p>
+      <p>可以点的工作台重刻：换课程、切课件、开关云 AI，点一次生成，全流程当场走一遍。</p>
     </div>
     <div class="wb-panel" data-reveal>
       <span class="wb-badge">界面演示 · 合成内容</span>
@@ -600,22 +630,29 @@ footer{background:var(--ink);color:var(--paper)}
       <div class="wb-body">
         <div class="wb-label">课程 <em>Course</em></div>
         <div class="wb-row">
-          <div class="wb-select">SMO309 决策心理学<i></i></div>
-          <div class="wb-mini-btn">＋ 新建课程</div>
+          <div class="wb-select has-menu" id="wbCourse" role="button" tabindex="0">SMO309 决策心理学<i></i></div>
+          <div class="wb-mini-btn" id="wbNew" role="button" tabindex="0">＋ 新建课程</div>
         </div>
-        <div class="wb-sum">考点导向 · 标准 · 自测 2 题/节 · 术语表 · 云改写已启用</div>
+        <div class="wb-menu" id="wbCourseMenu" hidden></div>
+        <div class="wb-sum" id="wbSum">考点导向 · 标准 · 自测 2 题/节 · 术语表 · 云改写已启用</div>
 
-        <div class="wb-label" style="margin-top:18px">已选课件</div>
-        <div class="wb-file">
+        <div class="wb-wizard" id="wbWizard" hidden>
+          <div class="wb-wiz-t">新建课程 <span id="wbWizStep">1 / 3</span></div>
+          <div class="wb-wiz-body" id="wbWizBody"></div>
+          <div class="wb-wiz-btns"><span class="wb-wiz-cancel" id="wbWizCancel">取消</span><button type="button" class="mini-btn" id="wbWizNext">下一步</button></div>
+        </div>
+
+        <div class="wb-label" style="margin-top:18px">已选课件 <em class="wb-hint">点击切换</em></div>
+        <div class="wb-file" id="wbFile" role="button" tabindex="0">
           <svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
-          <span class="wb-file-name">Lecture01_Week1.pptx</span>
-          <span class="wb-file-size">722 KB</span>
+          <span class="wb-file-name" id="wbFileName">Lecture01_Week1.pptx</span>
+          <span class="wb-file-size" id="wbFileSize">722 KB</span>
         </div>
 
         <div class="wb-label" style="margin-top:18px">AI 与输出</div>
         <div class="wb-row">
-          <div class="wb-select sm">默认创作者风格<i></i></div>
-          <span class="wb-check"><b></b>启用云 AI 改写 · 已同意</span>
+          <div class="wb-select sm has-menu" id="wbStyle" role="button" tabindex="0">默认创作者风格<i></i></div>
+          <span class="wb-check on" id="wbAi" role="button" tabindex="0"><b></b><span id="wbAiTxt">启用云 AI 改写 · 已同意</span></span>
         </div>
 
         <button type="button" class="wb-go" id="wbGo">
@@ -628,30 +665,29 @@ footer{background:var(--ink);color:var(--paper)}
         </div>
 
         <div class="wb-result" id="wbResult" hidden>
-          <div class="wb-res-head"><span class="wb-res-mark">✓</span>AI 改写并生成成功</div>
-          <div class="wb-res-kv">模式 AI 改写 · 解析引擎 python-pptx · 2,118 字符 · tokens 2,839</div>
+          <div class="wb-res-head"><span class="wb-res-mark">✓</span><span id="wbResHead">AI 改写并生成成功</span></div>
+          <div class="wb-res-kv" id="wbResKv">模式 AI 改写 · 解析引擎 python-pptx · 2,118 字符 · tokens 2,839</div>
           <span class="wb-dl">↓ 下载 docx</span>
-          <div class="wb-res-preview">## 决策中的个体差异 (Individual differences in decision-making)　**Openness（开放性）**：反映好奇心与创造力的倾向……</div>
+          <div class="wb-res-preview" id="wbResPrev">## 决策中的个体差异 (Individual differences in decision-making)　**Openness（开放性）**：反映好奇心与创造力的倾向……</div>
+          <div class="wb-saved">已存入课程「<span id="wbSavedC">SMO309 决策心理学</span>」· <a href="#merge">期末去合并 →</a></div>
         </div>
       </div>
-    </div>
-    <div class="wb-notes" data-reveal>
-      <div class="wb-note"><b>课程档案</b>考试形式、教学导向、输出偏好，一次设定全学期通用。</div>
-      <div class="wb-note"><b>三步向导</b>课程信息、考试与导向、AI 与输出，一分钟建完。</div>
-      <div class="wb-note"><b>云 AI 同意制</b>默认关闭；勾选同意后才发送课件，随时可关。</div>
-      <div class="wb-note"><b>墨点陪跑</b>改写的每一分钟，墨点都在工作条里陪你等。</div>
     </div>
   </section>
 
   <section class="merge" id="merge">
     <div class="section-head" data-reveal>
       <h2>一门课，一次转完。</h2>
-      <p>一学期十几份课件，勾选起来一次生成——一份编号从头到尾连续、图片各归各讲、可附整门课考点清单的笔记。</p>
+      <p>勾选一学期十几份课件的成品，一次生成一份编号连续的整门课笔记。</p>
     </div>
+    <figure class="merge-shot" data-reveal>
+      <img src="assets/merge-ui.png?v=20260917" alt="课程详情页的转换记录：勾选多讲后出现「合并所选」按钮与 AI 考点汇总开关" loading="lazy">
+      <figcaption>课程详情 · 转换记录　勾选 ≥2 讲 → 合并所选；勾「AI 考点汇总」再附跨讲考点清单。真实界面截图。</figcaption>
+    </figure>
     <div class="merge-facts" data-reveal>
-      <div><b>编号连续</b>按讲次排好，讲级「一、二、三」一路数下去，每讲的节级从 1. 重排；讲与讲之间自动分页。</div>
-      <div><b>图片各归各讲、不错位</b>每讲的图只出现在自己那讲的位置，不同讲的同名图互不覆盖。</div>
-      <div><b>考点清单跨讲归并</b>勾上「AI 考点汇总」，末尾多一节：按主题归并的整门课考点（标注来自哪几讲）、反复出现的核心概念、术语总表。算 1 次 AI 改写；不勾则纯合并，不扣次数。</div>
+      <div><b>编号连续</b>按讲次排好，讲级一路数下去，节级每讲从 1. 重排，讲间自动分页。</div>
+      <div><b>图片各归各讲、不错位</b>每讲的图只在自己那讲出现，同名图互不覆盖。</div>
+      <div><b>考点清单跨讲归并</b>勾上「AI 考点汇总」，末尾多一节整门课考点与术语总表（标注来自哪几讲）。算 1 次 AI 改写；不勾不扣次数。</div>
     </div>
   </section>
 </div>
@@ -886,15 +922,94 @@ footer{background:var(--ink);color:var(--paper)}
   update();
 })();
 
-// 工作台活演示：点击按钮，全流程当场走一遍（合成数据）
+// 工作台活演示：全部控件可点（合成数据），生成后指向「整门课合并」
 (function(){
-  const go = document.getElementById('wbGo');
-  if(!go) return;
-  const work = document.getElementById('wbWorking');
-  const res = document.getElementById('wbResult');
-  const stage = document.getElementById('wbStage');
-  const gt = document.getElementById('wbGoTxt');
-  const stages = ['解析课件…', 'AI 改写 3/12…', 'AI 改写 7/12…', '渲染排版…'];
+  const $ = id => document.getElementById(id);
+  const courses = [
+    { name: 'SMO309 决策心理学', sum: '考点导向 · 标准 · 自测 2 题/节 · 术语表 · 云改写已启用' },
+    { name: 'IOM307 企业沟通',   sum: '均衡导向 · 标准 · 自测 1 题/节 · 云改写已启用' },
+    { name: 'BUS303 商业沟通',   sum: '案例导向 · 详尽 · 自测 2 题/节 · 术语表 · 云改写未启用' },
+  ];
+  const files = [
+    { name: 'Lecture01_Week1.pptx', size: '722 KB', engine: 'python-pptx' },
+    { name: 'Lecture02_Fundamentals.pdf', size: '1.1 MB', engine: 'pypdf' },
+  ];
+  const styles = ['默认创作者风格', '宋体打印版', '屏幕阅读版'];
+  const st = { course: 0, file: 0, style: 0, ai: true };
+
+  function dropdown(anchor, menu, items, cur, onPick){
+    function render(){
+      menu.innerHTML = '';
+      items.forEach((t, i) => {
+        const d = document.createElement('div');
+        d.textContent = t;
+        if(i === cur) d.style.fontWeight = '700';
+        d.onclick = e => { e.stopPropagation(); menu.hidden = true; onPick(i); };
+        menu.appendChild(d);
+      });
+      menu.hidden = false;
+    }
+    anchor.addEventListener('click', e => { e.stopPropagation(); menu.hidden ? render() : (menu.hidden = true); });
+  }
+
+  // 课程下拉
+  dropdown($('wbCourse'), $('wbCourseMenu'), courses.map(c => c.name), st.course,
+    i => { st.course = i; $('wbCourse').childNodes[0].textContent = courses[i].name; $('wbSum').textContent = courses[i].sum; });
+  document.addEventListener('click', () => { $('wbCourseMenu').hidden = true; $('wbStyleMenu') && ($('wbStyleMenu').hidden = true); });
+
+  // 风格下拉
+  const styleMenu = document.createElement('div');
+  styleMenu.className = 'wb-menu'; styleMenu.id = 'wbStyleMenu'; styleMenu.hidden = true;
+  styleMenu.style.cssText = 'position:absolute;left:0;right:0;top:100%;z-index:5';
+  $('wbStyle').style.position = 'relative';
+  $('wbStyle').appendChild(styleMenu);
+  dropdown($('wbStyle'), styleMenu, styles, st.style, i => { st.style = i; $('wbStyle').childNodes[0].textContent = styles[i]; });
+
+  // 已选课件：点击切换
+  $('wbFile').addEventListener('click', () => {
+    st.file = (st.file + 1) % files.length;
+    const f = files[st.file];
+    $('wbFileName').textContent = f.name;
+    $('wbFileSize').textContent = f.size;
+  });
+
+  // AI 开关：联动按钮文案与结果
+  $('wbAi').addEventListener('click', () => {
+    st.ai = !st.ai;
+    $('wbAi').classList.toggle('on', st.ai);
+    $('wbAiTxt').textContent = st.ai ? '启用云 AI 改写 · 已同意' : '未启用 · 直出生成';
+    $('wbGoTxt').textContent = st.ai ? 'AI 改写并生成笔记' : '直出生成笔记';
+  });
+
+  // 新建课程：三步迷你向导（合成）
+  const wiz = $('wbWizard'), body = $('wbWizBody');
+  let wizStep = 1, wizName = 'ECO201 宏观经济学', wizExam = '闭卷笔试', wizAI = true;
+  const chips = (opts, cur) => opts.map((o, i) => `<span class="wiz-chip${i === cur ? ' on' : ''}" data-i="${i}">${o}</span>`).join('');
+  function renderWiz(){
+    $('wbWizStep').textContent = wizStep + ' / 3';
+    if(wizStep === 1) body.innerHTML = `<input id="wizName" value="${wizName}"><div class="wiz-tip">课程名会出现在笔记页眉和成品库里。</div>`;
+    if(wizStep === 2) body.innerHTML = `<div class="wiz-chips" id="wizExam">${chips(['闭卷笔试', '开卷', '课程作业'], ['闭卷笔试','开卷','课程作业'].indexOf(wizExam))}</div>`;
+    if(wizStep === 3) body.innerHTML = `<div class="wiz-chips" id="wizAI">${chips(['启用云 AI', '暂不启用'], wizAI ? 0 : 1)}</div><div class="wiz-tip">云 AI 默认关闭，勾选同意后才发送课件。</div>`;
+    body.querySelectorAll('.wiz-chip').forEach(c => c.onclick = () => {
+      if(wizStep === 2) wizExam = c.textContent; else wizAI = c.textContent === '启用云 AI';
+      renderWiz();
+    });
+    if(wizStep === 1) $('wizName').oninput = e => wizName = e.target.value;
+    $('wbWizNext').textContent = wizStep === 3 ? '完成' : '下一步';
+  }
+  $('wbNew').addEventListener('click', () => { wizStep = 1; wiz.hidden = false; renderWiz(); });
+  $('wbWizCancel').onclick = () => wiz.hidden = true;
+  $('wbWizNext').onclick = () => {
+    if(wizStep < 3){ wizStep++; renderWiz(); return; }
+    courses.push({ name: wizName, sum: `${wizExam} · 均衡 · 云改写${wizAI ? '已启用' : '未启用'}` });
+    st.course = courses.length - 1;
+    $('wbCourse').childNodes[0].textContent = wizName;
+    $('wbSum').textContent = courses[st.course].sum;
+    wiz.hidden = true;
+  };
+
+  // 生成：按当前选择走流程
+  const go = $('wbGo'), work = $('wbWorking'), res = $('wbResult'), stage = $('wbStage');
   let playing = false;
   go.addEventListener('click', () => {
     if(playing) return;
@@ -902,19 +1017,26 @@ footer{background:var(--ink);color:var(--paper)}
     res.hidden = true;
     work.hidden = false;
     go.classList.add('loading');
+    const stages = st.ai
+      ? ['解析课件…', 'AI 选图…', 'AI 改写 3/12…', 'AI 改写 7/12…', '渲染排版…']
+      : ['解析课件…', '识别标题与层级…', '渲染排版…'];
     let i = 0;
     stage.textContent = stages[0];
-    const iv = setInterval(() => {
-      i = Math.min(i + 1, stages.length - 1);
-      stage.textContent = stages[i];
-    }, 750);
+    const iv = setInterval(() => { i = Math.min(i + 1, stages.length - 1); stage.textContent = stages[i]; }, 700);
     setTimeout(() => {
       clearInterval(iv);
       work.hidden = true;
+      const f = files[st.file], c = courses[st.course];
+      $('wbResHead').textContent = st.ai ? 'AI 改写并生成成功' : '直出生成成功';
+      $('wbResKv').textContent = `模式 ${st.ai ? 'AI 改写' : '直出'} · 解析引擎 ${f.engine} · ${st.ai ? '2,118 字符 · tokens 2,839' : '1,864 字符'}`;
+      $('wbResPrev').textContent = st.ai
+        ? '## 决策中的个体差异 (Individual differences in decision-making)　**Openness（开放性）**：反映好奇心与创造力的倾向……'
+        : '## Individual differences in decision-making　- Personality traits shape how individuals approach choices……';
       res.hidden = false;
-      gt.textContent = '再走一遍';
+      $('wbGoTxt').textContent = '再走一遍';
       go.classList.remove('loading');
       playing = false;
+      $('wbSavedC').textContent = c.name;
     }, 2900);
   });
 })();
