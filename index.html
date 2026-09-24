@@ -3,22 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Notera 枢页 — 让笔记像你写的</title>
-<meta name="description" content="Notera 枢页：把课件变成你自己的复习笔记。上传 PPT / PDF，套用你的排版规范，导出可编辑 docx；一学期 13 节课的成品可一次合并成整门课笔记。">
+<title>Syllanote 枢页 — 从课件到能直接复习的笔记</title>
+<meta name="description" content="Syllanote 枢页：把课件变成你自己的复习笔记。上传 PPT / PDF，套用你的排版规范，导出可编辑 docx；一学期 13 节课的成品可一次合并成整门课笔记。网页版试运营中，课程笔记平台逐步展开。">
+<script>document.documentElement.classList.add('js')</script>
 <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-16 -2 104 124"><path d="M0 0 H84 V29 L38 60 L84 91 V120 H0 Z" fill="%2310142B"/><rect x="-13" y="99" width="34" height="34" fill="%23D8412F"/></svg>'>
 <style>
 /*
-  DIRECTION CONTRACT — Notera 枢页 · 产品官网 v2（Persuade）
+  DIRECTION CONTRACT — Syllanote 枢页 · 产品官网 v3（Persuade）
   THESIS: 一张会呼吸的品牌样张：印刷排版为骨，墨点 IP 为声，滚动为翻页；
   拒绝 SaaS 落地页的三栏卡片与渐变主视觉。
   OWN-WORLD: 纸白 #F4F1E8 主导，墨蓝 #10142B 结构（超大字行/规范反白区/页脚），
   石板灰 #5A6478 辅助，学术红 #D8412F 每视口至多一次（标志红块/枢页印章/墨滴）；
-  Bahnschrift 黑体字行 + 直角 + 1px 规线 + 缺口条带；IP 墨点（眨眼/浮滴）为导览。
-  STORY: 访客被官方标语 NOTES THAT SOUND LIKE YOU.（英文大字）与「让笔记像你写的。」（中文小字）
-  接住，10 秒内明白课件进、成品 docx 出、全程本机，因排版规范的真实细节相信专业度；行动是打开本地工作台。
-  FIRST VIEWPORT: 居中大号标志（红块盖印入场）→ 超大字行 NOTES THAT SOUND LIKE YOU. →
-  中文小字「让笔记像你写的。」→ 细规线 → 导语 → 墨蓝主按钮「打开工作台」。
-  FORM: brief-pinned（NOTERA 品牌手册 + 官方海报版式），非骰选。
+  Bahnschrift 黑体字行 + 直角 + 1px 规线 + 缺口条带；IP 墨点（眨眼/浮滴）为导览，
+  细点阵墨晕（help 页同款）作收尾水印。
+  STORY: 访客被官方标语 FROM COURSE SLIDES TO STUDY-READY NOTES.（英文大字，Ian 0925 定）
+  与「让笔记像你写的。」（中文小字）接住，名字由来 SYLLANOTE = SYLLABUS + NOTE 紧随其后；
+  10 秒内明白课件进、成品 docx 出；行动是获取网页版或桌面版。
+  平台趋势以「规线四栏」一处轻披露（工具 → 平台），NOW/NEXT 如实标签，慢慢披露不抢戏。
+  FIRST VIEWPORT: 居中大号标志（红块盖印入场）→ 超大字行逐行拉出（印张揭幕）→
+  中文小字 → 名字由来 → 细规线 → 导语 → 墨蓝主按钮。
+  FORM: brief-pinned（SYLLANOTE 品牌手册 + 官方海报版式），非骰选。
+  MOTION SYSTEM: 标题行遮罩揭幕（.hl 遮罩 + 印张拉出）为唯一 focal 动效，
+  内容块保持淡入上浮；零动画库，全部尊重 prefers-reduced-motion，no-JS 全可见。
   FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md.
 */
 :root{
@@ -52,11 +58,16 @@ body{background:var(--paper);color:var(--ink);font-family:var(--font-text);font-
 }
 .shell{max-width:1120px;margin:0 auto;padding:0 28px}
 
-/* ---------- 滚动入场 ---------- */
-[data-reveal]{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:var(--d,0s)}
-[data-reveal].in{opacity:1;transform:none}
+/* ---------- 滚动入场（两 tier：标题行遮罩揭幕 + 内容块淡入上浮；no-JS 全可见） ---------- */
+.js [data-reveal]{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:var(--d,0s)}
+.js [data-reveal].in{opacity:1;transform:none}
+[data-lines]{opacity:1 !important;transform:none !important;transition:none}
+.hl{display:block;overflow:hidden;padding-bottom:.09em;margin-bottom:-.09em}
+.js .hl-i{display:block;transform:translateY(115%);transition:transform .72s var(--ease);transition-delay:var(--d,0s)}
+.js [data-lines].in .hl-i{transform:none}
 @media (prefers-reduced-motion:reduce){
-  [data-reveal]{opacity:1;transform:none;transition:none}
+  .js [data-reveal]{opacity:1;transform:none;transition:none}
+  .js .hl-i{transform:none;transition:none}
   .stamp{animation:none !important}
   .demo.in .demo-arrow path{animation:none !important}
   html{scroll-behavior:auto}
@@ -85,11 +96,13 @@ nav{
 @keyframes stamp{from{transform:scale(0) rotate(-10deg)}to{transform:scale(1) rotate(0)}}
 .poster h1{
   font-family:var(--font-display);font-weight:900;
-  font-size:clamp(44px,7.2vw,92px);line-height:1.02;letter-spacing:-.01em;
-  text-transform:uppercase;margin-bottom:22px;
+  font-size:clamp(40px,6.8vw,84px);line-height:1.04;letter-spacing:-.01em;
+  text-transform:uppercase;margin-bottom:20px;
 }
 .cn-slogan{font-size:clamp(17px,2vw,22px);font-weight:600;letter-spacing:.08em}
 .cn-slogan::after{content:"";display:block;width:88px;height:3px;background:var(--ink);margin:26px auto 0}
+.etym{margin:16px auto 38px;font-family:var(--font-mono);font-size:12px;letter-spacing:.13em;color:var(--slate)}
+.etym b{color:var(--ink);font-weight:600}
 .lede{max-width:none;margin:0 auto 40px;color:var(--slate);font-size:16.5px}
 .lede b{color:var(--ink);font-weight:600}
 .cta-row{display:flex;gap:16px;justify-content:center;align-items:center;flex-wrap:wrap}
@@ -202,11 +215,11 @@ nav{
 
 /* ---------- 获取 / 定价 ---------- */
 .get{margin-bottom:48px}
-.get-grid{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--rule-strong)}
+.get-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--rule-strong)}
 .plan{position:relative;padding:24px 20px 26px;border-right:1px solid var(--rule);display:flex;flex-direction:column;transition:background .2s}
 .plan:last-child{border-right:none}
 /* 四档同色系（墨蓝 tint，品牌手册未定义、此处新增，见 DESIGN.md）：
-   FREE 纸白 → SPRINT 浅墨蓝调 → PLUS 墨蓝（最深，视觉锚点）→ DUO 中墨蓝调；PRO 保持灰调 NEXT */
+   FREE 纸白 → LIGHT 浅墨蓝调 → STANDARD 墨蓝（最深，视觉锚点）→ PREMIUM 中墨蓝调 */
 .plan.t0{background:var(--paper)}
 .plan.t1{background:#E4E6EE}
 .plan.t2{background:#C9CEDD}
@@ -387,8 +400,25 @@ body.modal-open{overflow:hidden}
 .feat-t{font-size:17px;font-weight:700;margin-bottom:8px}
 .feat-d{font-size:14px;color:var(--slate);line-height:1.75}
 
+/* ---------- 平台趋势：规线四栏，一处轻披露（工具 → 平台，NOW/NEXT 如实标签） ---------- */
+.platform{margin-bottom:56px}
+.platform-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--rule-strong)}
+.platform-grid>div{padding:20px 22px 26px 0;border-right:1px solid var(--rule);font-size:13px;color:var(--slate);line-height:1.7}
+.platform-grid>div:nth-child(n+2){padding-left:22px}
+.platform-grid>div:last-child{border-right:none}
+.platform-grid b{display:block;font-family:var(--font-display);font-weight:900;font-size:11.5px;letter-spacing:.16em;color:var(--slate-soft);margin-bottom:10px}
+.platform-grid b.on{color:var(--ink)}
+.platform-grid i{display:block;font-style:normal;font-weight:700;font-size:15.5px;color:var(--ink);margin-bottom:6px}
+
 /* ---------- 结尾 CTA ---------- */
-.final{padding:96px 0;text-align:center}
+.final{padding:96px 0;text-align:center;position:relative;overflow:hidden}
+.final-ink{position:absolute;right:min(-30px,-2vw);bottom:-46px;width:min(300px,26vw);opacity:.15;pointer-events:none}
+@media(max-width:880px){
+  .platform-grid{grid-template-columns:1fr}
+  .platform-grid>div{border-right:none;border-bottom:1px solid var(--rule);padding-left:0}
+  .platform-grid>div:last-child{border-bottom:none}
+  .final-ink{width:200px;right:-30px;bottom:-30px;opacity:.12}
+}
 .final h2{
   font-family:var(--font-display);font-weight:900;
   font-size:clamp(36px,5.2vw,68px);line-height:1.05;letter-spacing:-.01em;
@@ -498,8 +528,8 @@ footer{background:var(--ink);color:var(--paper)}
 
 <div class="shell">
   <nav>
-    <a class="brand" href="#top" aria-label="Notera 枢页">
-      <span class="wordmark">NOTERA</span>
+    <a class="brand" href="#top" aria-label="Syllanote 枢页">
+      <span class="wordmark">SYLLANOTE</span>
       <span class="brand-divider"></span>
       <span class="brand-cn">枢页</span>
     </a>
@@ -508,12 +538,16 @@ footer{background:var(--ink);color:var(--paper)}
   </nav>
 
   <section class="poster" id="top">
-    <svg class="mark-far" viewBox="-16 -2 104 124" width="90" height="128" role="img" aria-label="Notera 标志" data-reveal>
+    <svg class="mark-far" viewBox="-16 -2 104 124" width="90" height="128" role="img" aria-label="Syllanote 标志" data-reveal>
       <path d="M0 0 H84 V29 L38 60 L84 91 V120 H0 Z" fill="#10142B"/>
       <rect class="stamp" x="-13" y="99" width="34" height="34" fill="#D8412F"/>
     </svg>
-    <h1 data-reveal style="--d:.08s">NOTES THAT<br>SOUND LIKE YOU.</h1>
+    <h1 data-lines style="--d:.08s">
+      <span class="hl"><span class="hl-i" style="--d:.1s">FROM COURSE SLIDES</span></span>
+      <span class="hl"><span class="hl-i" style="--d:.2s">TO STUDY-READY NOTES.</span></span>
+    </h1>
     <div class="cn-slogan" data-reveal style="--d:.16s">让笔记像你写的。</div>
+    <p class="etym" data-reveal style="--d:.24s">SYLLANOTE = <b>SYLLABUS</b> + <b>NOTE</b> · 取自「课程大纲」与「笔记」</p>
     <p class="lede" data-reveal style="--d:.24s">课件交进来，一份<b>像你写的</b> docx 交出去。<br><b>结构跟着课件走</b>：讲次、标题、小节与原课件一一对应，随手翻回去就能核对；素材只来自你的课件，不加外部内容。</p>
     <div class="cta-row" data-reveal style="--d:.32s">
       <a class="btn-primary" href="#get"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>免费获取</a>
@@ -530,16 +564,16 @@ footer{background:var(--ink);color:var(--paper)}
 
   <section id="how">
     <div class="mo-strip" data-reveal>
-      <svg viewBox="0 0 100 112" width="86" height="96" role="img" aria-label="墨点，Notera 的 IP 形象"><use href="#modot"/></svg>
+      <svg viewBox="0 0 100 112" width="86" height="96" role="img" aria-label="墨点，Syllanote 的 IP 形象"><use href="#modot"/></svg>
       <div>
         <div class="mo-say">「课件给我，理解归你。」</div>
         <div class="mo-sub">墨点负责搬运和排版；读懂、记住、考过，是你自己的部分。</div>
       </div>
     </div>
 
-    <div class="section-head" data-reveal>
-      <h2>三步，从课件到笔记。</h2>
-      <p style="max-width:none">不是把 PPT 拍平成文字，而是解析、重组、排版——这三步背后的规则都有出处。</p>
+    <div class="section-head">
+      <h2 data-lines><span class="hl"><span class="hl-i">三步，从课件到笔记。</span></span></h2>
+      <p data-reveal style="max-width:none">不是把 PPT 拍平成文字，而是解析、重组、排版——这三步背后的规则都有出处。</p>
     </div>
     <div class="steps">
       <div class="step" data-reveal style="--d:0s">
@@ -563,19 +597,19 @@ footer{background:var(--ink);color:var(--paper)}
       <div class="why-copy" data-reveal>
         <h3>这不是「把课件喂给 AI」。</h3>
         <p>你当然也能把课件丢给 AI。你会拿到<em>内容</em>——然后自己排标题层级、删掉「本讲小结」这类模板话、把散在 13 节里的重复概念并成一处、从几十张图里挑出有用的两三张。</p>
-        <p>每一步你都做得来，<em>只是每一步都要花时间</em>。Notera 把它们全部固定下来：5 条排版规范、3 层解析回退、一套图片策展规则，都来自创作者手搓几十万字稿子的逐段比对。</p>
+        <p>每一步你都做得来，<em>只是每一步都要花时间</em>。Syllanote 把它们全部固定下来：5 条排版规范、3 层解析回退、一套图片策展规则，都来自创作者手搓几十万字稿子的逐段比对。</p>
         <p class="why-close"><b>这些事你不用做第二遍。</b></p>
       </div>
       <div class="why-art" data-reveal>
-        <img src="assets/why-illustration.svg?v=20260918d" alt="左：手动整理笔记的学生，脑子里全是步骤；右：用 Notera 一次合并出干净的整门课笔记" loading="lazy">
+        <img src="assets/why-illustration.svg?v=20260918d" alt="左：手动整理笔记的学生，脑子里全是步骤；右：用 Syllanote 一次合并出干净的整门课笔记" loading="lazy">
       </div>
     </div>
   </section>
 
   <section class="samples" id="samples">
-    <div class="section-head" data-reveal style="padding-bottom:16px">
-      <h2>担心 AI 读错？拿原页对着看。</h2>
-      <p style="max-width:none">两组真实转换：一门 PDF 型、一门 PPT 型课件，各取一页原页与对应成品页并排。<br>原页出于版权已模糊。</p>
+    <div class="section-head" style="padding-bottom:16px">
+      <h2 data-lines><span class="hl"><span class="hl-i">担心 AI 读错？拿原页对着看。</span></span></h2>
+      <p data-reveal style="max-width:none">两组真实转换：一门 PDF 型、一门 PPT 型课件，各取一页原页与对应成品页并排。<br>原页出于版权已模糊。</p>
     </div>
     <div class="sample-group-t" data-reveal><b>01 · PDF 型课件</b><span>一门商学院课程的第 1 讲：60 页 PDF 进去，9 页考点导向的笔记出来，Pivot 1 AI 改写用时 2 分 49 秒。</span></div>
     <div class="sample-grid" data-reveal>
@@ -620,9 +654,9 @@ footer{background:var(--ink);color:var(--paper)}
   </section>
 
   <section class="wbdemo" id="workbench">
-    <div class="section-head" data-reveal>
-      <h2>工作台，长这样。</h2>
-      <p>可以点的工作台重刻：换课程、切课件、开关云 AI，点一次生成，全流程当场走一遍。</p>
+    <div class="section-head">
+      <h2 data-lines><span class="hl"><span class="hl-i">工作台，长这样。</span></span></h2>
+      <p data-reveal>可以点的工作台重刻：换课程、切课件、开关云 AI，点一次生成，全流程当场走一遍。</p>
     </div>
     <div class="wb-panel" data-reveal>
       <span class="wb-badge">界面演示 · 合成内容</span>
@@ -676,9 +710,9 @@ footer{background:var(--ink);color:var(--paper)}
   </section>
 
   <section class="merge" id="merge">
-    <div class="section-head" data-reveal>
-      <h2>一门课，一次转完。</h2>
-      <p>勾选一学期十几份课件的成品，一次生成一份编号连续的整门课笔记。</p>
+    <div class="section-head">
+      <h2 data-lines><span class="hl"><span class="hl-i">一门课，一次转完。</span></span></h2>
+      <p data-reveal>勾选一学期十几份课件的成品，一次生成一份编号连续的整门课笔记。</p>
     </div>
     <figure class="merge-shot" data-reveal>
       <img src="assets/merge-ui.png?v=20260918" alt="课程详情页的转换记录：勾选多讲后出现「合并所选」按钮与 AI 考点汇总开关" loading="lazy">
@@ -695,7 +729,7 @@ footer{background:var(--ink);color:var(--paper)}
 <section class="spec">
   <div class="spine-top" aria-hidden="true"></div>
   <div class="shell spec-wrap">
-    <h2 data-reveal>开箱是创作者风格，长期是你的风格。</h2>
+    <h2 data-lines><span class="hl"><span class="hl-i">开箱是创作者风格，长期是你的风格。</span></span></h2>
     <p class="spec-sub" data-reveal style="--d:.08s;max-width:none">内置一套从手工精排的笔记稿里逐段比对反推的默认排版，开箱就是能直接打印复习的成品。<br><span style="font-size:14px">风格档已经上线：同一份内容，每个人导出自己的样子。</span></p>
     <div class="spec-grid">
       <div class="spec-row" data-reveal style="--d:0s">
@@ -729,58 +763,49 @@ footer{background:var(--ink);color:var(--paper)}
 
 <div class="shell">
   <section class="get" id="get">
-    <div class="section-head" data-reveal>
-      <h2>拿到 Notera。</h2>
-      <p style="max-width:none">Windows 双击即用；Mac 以源码运行。不注册账号、不上传课件。<br>解析与精排永久免费；Pivot 1 AI 改写赠 3 次体验，之后用激活码解锁。</p>
+    <div class="section-head">
+      <h2 data-lines><span class="hl"><span class="hl-i">拿到 Syllanote。</span></span></h2>
+      <p data-reveal style="max-width:none">网页版试运营中：手机号登录，账号即用。解析与精排<b>永久免费</b>；<br>AI 精修与进阶服务用 <b>Sylla</b> 计价——<b>1 元 = 10 Sylla</b> 直充，套餐每元得更多；只进不出、长期有效。</p>
     </div>
     <div class="get-grid">
       <div class="plan t0" data-reveal>
         <svg class="plan-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M11 5h26v9.8L24 23.4 37 31.8V43H11z"/></svg>
         <div class="plan-k">FREE</div>
         <div class="plan-price"><span class="cur">¥</span><span class="num">0</span></div>
-        <div class="plan-meta">不需激活码</div>
+        <div class="plan-meta">直出即用 · 不限量</div>
         <div class="plan-t">解析 · 精排 · 导出。</div>
-        <ul><li>PPT · PDF · Word · MD</li><li>精排版 · docx 可编辑</li><li>三套风格 · 课程档案</li><li>云 AI 体验 3 次</li></ul>
+        <ul><li>PPT · PDF · Word</li><li>精排版 · docx 可编辑</li><li>三档风格 · 课程档案</li><li>直出不限量</li></ul>
       </div>
       <div class="plan t1" data-reveal style="--d:.06s">
         <svg class="plan-ico" viewBox="0 0 48 48" aria-hidden="true"><path class="f" d="M6 16l8 4-8 4zM20 16l8 4-8 4zM34 16l8 4-8 4z"/><path d="M6 32h36M6 37h22"/></svg>
-        <div class="plan-k">SPRINT</div>
-        <div class="plan-price"><span class="cur">¥</span><span class="num">14.9</span><small>/ 10 次</small></div>
-        <div class="plan-meta"><s>标价 ¥19.9</s> · 首学期立减 ¥5</div>
-        <div class="plan-t">单门课的考前冲刺。</div>
-        <ul><li>包含 FREE 功能</li><li>Pivot 1 引擎</li><li>10 次 Pivot 1 AI 改写</li><li>一年内有效 · 可叠加</li></ul>
+        <div class="plan-k">LIGHT</div>
+        <div class="plan-price"><span class="cur">¥</span><span class="num">14.9</span><small>/ 188 Sylla</small></div>
+        <div class="plan-meta">≈ ¥0.79 / 次 AI 精修</div>
+        <div class="plan-t">十几次精修，试水刚好。</div>
+        <ul><li>包含 FREE 全部</li><li>AI 精修 10 Sylla/次 · 共 18 次</li><li>Sylla 可叠加 · 长期有效</li><li>手机号登录即到账</li></ul>
       </div>
       <div class="plan hot" data-reveal style="--d:.12s">
         <svg class="plan-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M15 4h24v9.4L27 21.4 39 29.4V40H15z" opacity=".45"/><path d="M9 9h24v9.4L21 26.4 33 34.4V45H9z"/></svg>
-        <div class="plan-k">PLUS</div>
-        <div class="plan-price"><span class="cur">¥</span><span class="num">49</span><small>/ 学期</small></div>
-        <div class="plan-meta"><s>标价 ¥79</s> · 首学期立减 ¥30</div>
-        <div class="plan-t">整个学期不限次。</div>
-        <ul><li>包含 FREE 功能</li><li>Pivot 1 引擎</li><li>全学期 · 所有课 · 不限次</li><li>自测 · 术语表 · 考点清单</li><li>有效期至学期末</li></ul>
+        <div class="plan-k">STANDARD</div>
+        <div class="plan-price"><span class="cur">¥</span><span class="num">49</span><small>/ 688 Sylla</small></div>
+        <div class="plan-meta">≈ ¥0.71 / 次 AI 精修 · 更划算</div>
+        <div class="plan-t">一学期的精修量。</div>
+        <ul><li>包含 LIGHT 全部</li><li>约 68 次 AI 精修（整学期 60+ 次够用）</li><li>自测 · 术语表 · 考点清单</li><li>首学期内测价</li></ul>
       </div>
       <div class="plan t2" data-reveal style="--d:.18s">
         <svg class="plan-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 10h20v7L14 24l12 7v12H6z"/><path d="M42 10H22v7l12 7-12 7v12h20z"/></svg>
-        <div class="plan-k">DUO</div>
-        <div class="plan-price"><span class="cur">¥</span><span class="num">89</span><small>/ 学期 · 两人</small></div>
-        <div class="plan-meta"><s>标价 ¥129</s> · 每人 ¥44.5</div>
-        <div class="plan-t">两个人的学期码。</div>
-        <ul><li>包含 FREE 功能</li><li>Pivot 1 引擎</li><li>两枚独立学期码 · 各自激活</li><li>每人 ¥44.5</li></ul>
-      </div>
-      <div class="plan next" data-reveal style="--d:.24s">
-        <svg class="plan-ico" viewBox="0 0 48 48" aria-hidden="true"><path class="f" d="M11 5h26v9.8L24 23.4 37 31.8V43H11z"/><path class="f" d="M4 37h13v8H4z"/></svg>
-        <div class="plan-k">PRO <span class="plan-badge">NEXT</span></div>
-        <div class="plan-price"><span class="cur">¥</span><span class="num">109</span><small>/ 学期</small></div>
-        <div class="plan-meta">NEXT · 暂不可购买</div>
-        <div class="plan-t">更强的引擎和功能。</div>
-        <ul><li>包含 FREE 所有功能</li><li>包含 PLUS 所有功能</li><li>Pivot 1 Pro 引擎</li><li>整门课冲刺卷 · Anki 术语卡</li><li>新功能优先体验</li></ul>
-        <div class="plan-foot">即将推出，暂不可购买。想第一时间知道？在下方留个微信。</div>
+        <div class="plan-k">PREMIUM</div>
+        <div class="plan-price"><span class="cur">¥</span><span class="num">109</span><small>/ 1688 Sylla</small></div>
+        <div class="plan-meta">≈ ¥0.65 / 次 AI 精修 · 最划算</div>
+        <div class="plan-t">重度与期末选手。</div>
+        <ul><li>包含 STANDARD 全部</li><li>约 168 次 AI 精修</li><li>期末冲刺礼包（冲刺卷 + 术语卡 · 随上线解锁）</li><li>转换优先通道 · 新功能抢先体验</li></ul>
       </div>
     </div>
-    <p class="get-term" data-reveal>划线为标价，现价为<b>首学期内测价，2026 春季学期起恢复标价</b>。</p>
+    <p class="get-term" data-reveal>直充 1 元 = 10 Sylla；套餐每元得更多（LIGHT 12.6 / STANDARD 14.0 / PREMIUM 15.5 Sylla）。Sylla 只进不出、不可提现、可叠加、长期有效，<b>不设学期有效期</b>。AI 精修上线前，直出完全免费。</p>
     <div class="get-steps" data-reveal>
-      <div><b>01</b>下载对应平台的 zip，解压到任意文件夹。</div>
-      <div><b>02</b>Windows 双击 Notera.exe；Mac 在终端执行 bash run.sh。浏览器自动打开工作台。</div>
-      <div><b>03</b>拖入课件 → 生成 → 下载 docx。要 AI 时，到「激活」页粘贴激活码。</div>
+      <div><b>01</b>网页版：手机号登录即用（试运营）。桌面版：下载对应平台的 zip，解压到任意文件夹。</div>
+      <div><b>02</b>Windows 双击应用图标；Mac 在终端执行 bash run.sh。浏览器自动打开工作台。</div>
+      <div><b>03</b>拖入课件 → 生成 → 下载 docx。AI 精修点亮后按 Sylla 自动扣减，流水在钱包可查。</div>
     </div>
     <div class="get-bottom" data-reveal>
       <div class="get-dl">
@@ -789,7 +814,7 @@ footer{background:var(--ink);color:var(--paper)}
           <a class="btn-ghost" id="dlBtnMac" href="https://wwauz.lanzouw.com/iRlT549ipoef" target="_blank" rel="noopener">下载 Mac 版 · 源码运行 · 1.9 MB</a>
         </div>
         <div class="dl-facts">
-          <div><b>Windows 10 / 11</b><span>解压，双击 Notera.exe</span></div>
+          <div><b>Windows 10 / 11</b><span>解压，双击应用图标即可</span></div>
           <div><b>Mac</b><span>需 Python 3，终端执行 <code>bash run.sh</code></span></div>
           <div><b>激活码</b><span>两平台通用 · 免费体验 3 次</span></div>
         </div>
@@ -798,21 +823,21 @@ footer{background:var(--ink);color:var(--paper)}
       <div class="contact" id="contact">
         <img src="assets/wechat-qr.png" alt="Ian 的微信二维码" width="148" height="148" loading="lazy">
         <div class="contact-col">
-          <b class="contact-title">购买激活码</b>
+          <b class="contact-title">购买 Sylla</b>
           <div class="contact-lines">
-            <span>获取运营方微信：ID <span id="wxId" class="nowrap">IanSkunk</span>（扫左侧二维码），备注「Notera」</span>
-            <span>付款后即刻发码，粘贴进「激活」页即用</span>
+            <span>获取运营方微信：ID <span id="wxId" class="nowrap">IanSkunk</span>（扫左侧二维码），备注「Syllanote」</span>
+            <span>微信转账后人工入账（通常 1 小时内），手机号登录即见余额</span>
           </div>
-          <div class="price-chips"><span>PLUS ¥49</span><span>DUO ¥89</span><span>SPRINT ¥14.9</span></div>
-          <span class="contact-fine">首学期内测价 · 2026 春季学期起恢复标价</span>
+          <div class="price-chips"><span>188 Sylla · ¥14.9</span><span>688 Sylla · ¥49</span><span>1688 Sylla · ¥109</span></div>
+          <span class="contact-fine">首学期内测价 · 只进不出 · 长期有效</span>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="section-head" data-reveal style="padding-bottom:32px">
-    <h2>为什么是 Notera。</h2>
-    <p style="max-width:none">不注册、不订阅、不锁定。它更像你自己的排版引擎，而不是又一个平台。</p>
+  <div class="section-head" style="padding-bottom:32px">
+    <h2 data-lines><span class="hl"><span class="hl-i">为什么是 Syllanote。</span></span></h2>
+    <p data-reveal style="max-width:none">不订阅、不锁定。它先是你自己的排版引擎；在这个地基上，平台的部分正在慢慢长出来。</p>
   </div>
   <div class="feats">
     <div class="feat" data-reveal style="--d:0s">
@@ -833,6 +858,20 @@ footer{background:var(--ink);color:var(--paper)}
     </div>
   </div>
 
+  <!-- 平台趋势（Ian 0925：一点点披露，工具 → 平台；NOW/NEXT 如实标签，慢慢披露不抢戏） -->
+  <section class="platform" id="platform">
+    <div class="section-head">
+      <h2 data-lines><span class="hl"><span class="hl-i">先是一份好笔记，然后是一个平台。</span></span></h2>
+      <p data-reveal style="max-width:none">AI 转写笔记是地基：解析与精排免费、直出不限量。在这个地基上，Syllanote 正在长成课程知识的平台——每一步先做扎实，再开下一步。</p>
+    </div>
+    <div class="platform-grid" data-reveal>
+      <div><b class="on">NOW</b><i>课件 → 笔记</i><span>上传课件，解析、精排、导出 docx；一学期的成品一次合并成整门课笔记。</span></div>
+      <div><b class="on">NOW</b><i>账号与钱包</i><span>网页版试运营中：手机号登录、Sylla 计价、流水笔笔可查。</span></div>
+      <div><b>NEXT</b><i>课程笔记市场</i><span>学长的笔记按课程上架，先试读、后购买。</span></div>
+      <div><b>NEXT</b><i>创作者与悬赏</i><span>你的笔记，比你想象的值钱——上架与悬赏机制逐步开放。</span></div>
+    </div>
+  </section>
+
   <!-- 发布前：填入真实评价（原话、署名方式经本人同意）。PRODUCT.md 原则 4：不虚构、不改写、不美化。
        有 ≥3 条真实反馈前保持 hidden；结构照 .feats 四格即可。 -->
   <section id="voices" hidden>
@@ -843,7 +882,25 @@ footer{background:var(--ink);color:var(--paper)}
   </section>
 
   <section class="final">
-    <h2 data-reveal>START OWNING.</h2>
+    <svg class="final-ink" viewBox="0 0 100 112" aria-hidden="true">
+      <defs>
+        <pattern id="inkdots" width="1.7" height="1.7" patternUnits="userSpaceOnUse">
+          <rect width="1.15" height="1.15" fill="#10142B"/>
+        </pattern>
+      </defs>
+      <g fill="url(#inkdots)">
+        <path d="M50 32 C34 32 24 46 22 62 C20 80 32 92 50 92 C68 92 80 80 78 62 C76 46 66 32 50 32 Z"/>
+        <ellipse cx="21" cy="70" rx="4" ry="7" transform="rotate(-15 21 70)"/>
+        <ellipse cx="79" cy="70" rx="4" ry="7" transform="rotate(15 79 70)"/>
+        <ellipse cx="40" cy="92" rx="5.5" ry="4"/>
+        <ellipse cx="60" cy="92" rx="5.5" ry="4"/>
+      </g>
+      <ellipse cx="42.5" cy="60" rx="4.5" ry="6.5" fill="#F4F1E8"/>
+      <ellipse cx="57.5" cy="60" rx="4.5" ry="6.5" fill="#F4F1E8"/>
+      <path d="M46 72 Q50 76 54 72" stroke="#F4F1E8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M50 2 C53 8 57 11 57 15 A7 7 0 1 1 43 15 C43 11 47 8 50 2 Z" fill="#D8412F"/>
+    </svg>
+    <h2 data-lines><span class="hl"><span class="hl-i">START OWNING.</span></span></h2>
     <p data-reveal style="--d:.08s">现在，把课听懂。双击即用，无需注册，第一份笔记一分钟内到手。</p>
     <div class="cta-row" data-reveal style="--d:.16s">
       <a class="btn-primary" href="#get"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>免费获取</a>
@@ -855,8 +912,8 @@ footer{background:var(--ink);color:var(--paper)}
     <div class="foot-spine"></div>
     <div class="foot-inner">
       <div class="foot-brand">
-        <span class="foot-mo" aria-label="墨点，Notera 的 IP 形象"><svg viewBox="0 0 100 112" width="30" height="34" aria-hidden="true"><use href="#modot-inv"/></svg></span>
-        <span class="foot-wordmark">NOTERA</span>
+        <span class="foot-mo" aria-label="墨点，Syllanote 的 IP 形象"><svg viewBox="0 0 100 112" width="30" height="34" aria-hidden="true"><use href="#modot-inv"/></svg></span>
+        <span class="foot-wordmark">SYLLANOTE</span>
       </div>
       <div class="foot-meta">
         <div>YOUR NOTES, BUT BETTER.</div>
@@ -896,7 +953,7 @@ footer{background:var(--ink);color:var(--paper)}
 })();
 // 滚动入场：进入视口即揭幕，一次性
 (function(){
-  const els = document.querySelectorAll('[data-reveal]');
+  const els = document.querySelectorAll('[data-reveal],[data-lines]');
   if(!('IntersectionObserver' in window)){
     els.forEach(el => el.classList.add('in'));
     return;

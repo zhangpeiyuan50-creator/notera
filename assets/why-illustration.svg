@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 660" width="1240" height="660" role="img" aria-label="左：手动整理，忙乱无助；右：用 Notera，一份干净的整门课笔记">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 660" width="1240" height="660" role="img" aria-label="左：手动整理，忙乱无助；右：用 Syllanote，一份干净的整门课笔记">
 <clipPath id="cl"><rect x="40" y="0" width="490" height="585"/></clipPath>
 <clipPath id="cr"><rect x="700" y="0" width="500" height="585"/></clipPath>
 <rect x="40" y="90" width="490" height="495" fill="none" stroke="#10142B" stroke-width="1.4"/>
@@ -24,5 +24,5 @@
 <rect x="1074" y="609" width="111.72480000000002" height="5" fill="#10142B"/>
 <rect x="1051" y="635" width="178" height="9" fill="#10142B"/>
 <text x="285" y="634" text-anchor="middle" font-size="21" font-weight="700" fill="#10142B" font-family="'Microsoft YaHei','PingFang SC','Noto Sans SC',sans-serif">01 · 手动</text>
-<text x="930" y="634" text-anchor="middle" font-size="21" font-weight="700" fill="#10142B" font-family="'Microsoft YaHei','PingFang SC','Noto Sans SC',sans-serif">02 · 用 NOTERA</text>
+<text x="930" y="634" text-anchor="middle" font-size="21" font-weight="700" fill="#10142B" font-family="'Microsoft YaHei','PingFang SC','Noto Sans SC',sans-serif">02 · 用 SYLLANOTE</text>
 </svg>
